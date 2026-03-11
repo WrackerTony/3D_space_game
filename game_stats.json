@@ -1,0 +1,27 @@
+{
+  "total_games_played": 53,
+  "max_score_orbs": 41,
+  "max_distance": 2692,
+  "total_orbs_collected": 228,
+  "total_distance_traveled": 15250,
+  "last_games": [
+    {
+      "game_number": 53,
+      "orbs_collected": 3,
+      "distance": 190,
+      "date": "2026-03-11 21:08:41"
+    },
+    {
+      "game_number": 52,
+      "orbs_collected": 1,
+      "distance": 217,
+      "date": "2026-03-11 20:52:14"
+    },
+    {
+      "game_number": 51,
+      "orbs_collected": 16,
+      "distance": 775,
+      "date": "2026-03-11 20:51:55"
+    }
+  ]
+}
