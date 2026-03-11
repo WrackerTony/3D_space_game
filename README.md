@@ -21,9 +21,9 @@
 ## 🎬 Trailer
 
 <div align="center">
-  <video src=".\intro.mp4" controls width="800">
-    <a href=".\intro.mp4">▶ Watch the trailer</a>
-  </video>
+
+![Game Trailer](intro_preview.gif)
+
 </div>
 
 ---
@@ -133,7 +133,9 @@ python main.py
 ├── game_stats.py                    # Stats tracking logic
 ├── game_logger.py                   # JSON event logger
 ├── requirements.txt                 # Python dependencies
-├── intro.mkv                        # Game trailer
+├── intro.mkv                        # Original game trailer
+├── intro.mp4                        # Converted trailer (web-compatible)
+├── intro_preview.gif                # Animated preview for README
 ├── Cool_Space_ship__*_texture.obj   # Player ship 3D model
 ├── Cool_Space_ship__*_texture.png   # Player ship texture
 ├── backround/
