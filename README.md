@@ -107,7 +107,7 @@ The game automatically tracks your performance across sessions:
 
 ---
 
-## 📦 Installation & Running
+## Installation & Running
 
 ```bash
 # 1. Clone the repository
