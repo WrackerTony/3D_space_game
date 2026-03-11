@@ -21,8 +21,8 @@
 ## 🎬 Trailer
 
 <div align="center">
-  <video src="intro.mp4" controls width="800">
-    <a href="intro.mp4">▶ Watch the trailer</a>
+  <video src=".\intro.mp4" controls width="800">
+    <a href=".\intro.mp4">▶ Watch the trailer</a>
   </video>
 </div>
 
