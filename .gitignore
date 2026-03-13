@@ -1,0 +1,12 @@
+# Ignore game logs and stats
+game_log.jsonl
+game_log*.jsonl
+game_stats.json
+game_stats*.json
+
+# Ignore Python cache
+__pycache__/
+*.py[cod]
+*.pyc
+*.pyo
+*.pyd

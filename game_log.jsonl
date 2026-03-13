@@ -1,68 +1,189 @@
-{"timestamp": "2026-03-11 21:07:51.190", "elapsed_s": 0.0, "category": "SYSTEM", "message": "Log file cleared for new session"}
-{"timestamp": "2026-03-11 21:07:51.191", "elapsed_s": 0.0, "category": "SYSTEM", "message": "Application starting", "data": {"os": "linux", "python": "3.13.11"}}
-{"timestamp": "2026-03-11 21:07:51.463", "elapsed_s": 0.273, "category": "SYSTEM", "message": "Ursina engine initialized", "data": {"platform": "linux"}}
-{"timestamp": "2026-03-11 21:07:51.467", "elapsed_s": 0.277, "category": "SYSTEM", "message": "Preloading assets..."}
-{"timestamp": "2026-03-11 21:07:52.756", "elapsed_s": 1.566, "category": "GAME", "message": "Player entity created"}
-{"timestamp": "2026-03-11 21:07:52.756", "elapsed_s": 1.566, "category": "GAME", "message": "Player spawned"}
-{"timestamp": "2026-03-11 21:07:53.238", "elapsed_s": 2.047, "category": "SYSTEM", "message": "Preloaded player model", "data": {"model": "Cool_Space_ship__0623175827_texture.obj"}}
-{"timestamp": "2026-03-11 21:07:53.238", "elapsed_s": 2.047, "category": "SYSTEM", "message": "Preloaded player texture", "data": {"texture": "Cool_Space_ship__0623175827_texture.png"}}
-{"timestamp": "2026-03-11 21:07:56.403", "elapsed_s": 5.213, "category": "SYSTEM", "message": "Preloaded meteorite model 0", "data": {"model": "meteorit_style/meteorit.obj"}}
-{"timestamp": "2026-03-11 21:07:56.645", "elapsed_s": 5.455, "category": "SYSTEM", "message": "Preloaded meteorite texture 0"}
-{"timestamp": "2026-03-11 21:07:56.645", "elapsed_s": 5.455, "category": "SYSTEM", "message": "All assets preloaded successfully"}
-{"timestamp": "2026-03-11 21:07:56.657", "elapsed_s": 5.467, "category": "UI", "message": "Loading screen hidden"}
-{"timestamp": "2026-03-11 21:07:56.657", "elapsed_s": 5.467, "category": "UI", "message": "Cleared all UI panels"}
-{"timestamp": "2026-03-11 21:07:56.657", "elapsed_s": 5.467, "category": "MENU", "message": "Showing start menu"}
-{"timestamp": "2026-03-11 21:07:56.670", "elapsed_s": 5.48, "category": "SYSTEM", "message": "Application ready - showing start menu"}
-{"timestamp": "2026-03-11 21:08:08.896", "elapsed_s": 17.705, "category": "UI", "message": "Cleared all UI panels"}
-{"timestamp": "2026-03-11 21:08:08.896", "elapsed_s": 17.706, "category": "MENU", "message": "Showing stats screen"}
-{"timestamp": "2026-03-11 21:08:08.896", "elapsed_s": 17.706, "category": "STATS", "message": "Stats loaded", "data": {"total_games_played": 52, "max_score_orbs": 41, "max_distance": 2692, "total_orbs_collected": 225, "total_distance_traveled": 15060, "last_games": [{"game_number": 52, "orbs_collected": 1, "distance": 217, "date": "2026-03-11 20:52:14"}, {"game_number": 51, "orbs_collected": 16, "distance": 775, "date": "2026-03-11 20:51:55"}, {"game_number": 50, "orbs_collected": 1, "distance": 162, "date": "2026-03-11 20:51:02"}]}}
-{"timestamp": "2026-03-11 21:08:10.962", "elapsed_s": 19.772, "category": "MENU", "message": "Navigating back to main menu"}
-{"timestamp": "2026-03-11 21:08:10.963", "elapsed_s": 19.772, "category": "UI", "message": "Cleared all UI panels"}
-{"timestamp": "2026-03-11 21:08:10.963", "elapsed_s": 19.772, "category": "MENU", "message": "Showing start menu"}
-{"timestamp": "2026-03-11 21:08:19.445", "elapsed_s": 28.255, "category": "UI", "message": "Cleared all UI panels"}
-{"timestamp": "2026-03-11 21:08:19.445", "elapsed_s": 28.255, "category": "MENU", "message": "Showing help screen"}
-{"timestamp": "2026-03-11 21:08:21.202", "elapsed_s": 30.012, "category": "MENU", "message": "Navigating back to main menu"}
-{"timestamp": "2026-03-11 21:08:21.203", "elapsed_s": 30.012, "category": "UI", "message": "Cleared all UI panels"}
-{"timestamp": "2026-03-11 21:08:21.203", "elapsed_s": 30.013, "category": "MENU", "message": "Showing start menu"}
-{"timestamp": "2026-03-11 21:08:22.935", "elapsed_s": 31.745, "category": "UI", "message": "Cleared all UI panels"}
-{"timestamp": "2026-03-11 21:08:22.935", "elapsed_s": 31.745, "category": "MENU", "message": "Showing stats screen"}
-{"timestamp": "2026-03-11 21:08:22.936", "elapsed_s": 31.745, "category": "STATS", "message": "Stats loaded", "data": {"total_games_played": 52, "max_score_orbs": 41, "max_distance": 2692, "total_orbs_collected": 225, "total_distance_traveled": 15060, "last_games": [{"game_number": 52, "orbs_collected": 1, "distance": 217, "date": "2026-03-11 20:52:14"}, {"game_number": 51, "orbs_collected": 16, "distance": 775, "date": "2026-03-11 20:51:55"}, {"game_number": 50, "orbs_collected": 1, "distance": 162, "date": "2026-03-11 20:51:02"}]}}
-{"timestamp": "2026-03-11 21:08:24.993", "elapsed_s": 33.803, "category": "MENU", "message": "Navigating back to main menu"}
-{"timestamp": "2026-03-11 21:08:24.993", "elapsed_s": 33.803, "category": "UI", "message": "Cleared all UI panels"}
-{"timestamp": "2026-03-11 21:08:24.993", "elapsed_s": 33.803, "category": "MENU", "message": "Showing start menu"}
-{"timestamp": "2026-03-11 21:08:26.997", "elapsed_s": 35.806, "category": "UI", "message": "Cleared all UI panels"}
-{"timestamp": "2026-03-11 21:08:26.997", "elapsed_s": 35.807, "category": "UI", "message": "Cleared all UI panels"}
-{"timestamp": "2026-03-11 21:08:26.997", "elapsed_s": 35.807, "category": "GAME", "message": "Cleaned up game entities"}
-{"timestamp": "2026-03-11 21:08:27.044", "elapsed_s": 35.854, "category": "GAME", "message": "Game reset complete"}
-{"timestamp": "2026-03-11 21:08:27.045", "elapsed_s": 35.854, "category": "GAME", "message": "Game started"}
-{"timestamp": "2026-03-11 21:08:27.046", "elapsed_s": 35.855, "category": "ORB", "message": "Spawned power orb", "data": {"z": 73.8}}
-{"timestamp": "2026-03-11 21:08:28.183", "elapsed_s": 36.993, "category": "ORB", "message": "Collected shooter orb", "data": {"total": 1, "power": 0.93}}
-{"timestamp": "2026-03-11 21:08:28.801", "elapsed_s": 37.61, "category": "ORB", "message": "Spawned power orb", "data": {"z": 85.6}}
-{"timestamp": "2026-03-11 21:08:30.601", "elapsed_s": 39.41, "category": "GAME", "message": "Projectile fired", "data": {"pos": "Vec3(2.1519844, 1.500687, 45.579292)"}}
-{"timestamp": "2026-03-11 21:08:30.602", "elapsed_s": 39.412, "category": "ORB", "message": "Spawned drain orb", "data": {"z": 112.7}}
-{"timestamp": "2026-03-11 21:08:30.886", "elapsed_s": 39.696, "category": "GAME", "message": "Projectile fired", "data": {"pos": "Vec3(1.9352778, 1.5426152, 49.10814)"}}
-{"timestamp": "2026-03-11 21:08:31.084", "elapsed_s": 39.894, "category": "GAME", "message": "Projectile fired", "data": {"pos": "Vec3(1.8810315, 1.5531106, 51.57336)"}}
-{"timestamp": "2026-03-11 21:08:32.407", "elapsed_s": 41.217, "category": "ORB", "message": "Spawned shooter orb", "data": {"z": 124.7}}
-{"timestamp": "2026-03-11 21:08:32.904", "elapsed_s": 41.714, "category": "ORB", "message": "Collected power orb", "data": {"total": 2, "power": 0.89}}
-{"timestamp": "2026-03-11 21:08:34.057", "elapsed_s": 42.866, "category": "GAME", "message": "Projectile fired", "data": {"pos": "Vec3(-3.1641814, -0.037586614, 89.30581)"}}
-{"timestamp": "2026-03-11 21:08:34.211", "elapsed_s": 43.021, "category": "ORB", "message": "Spawned power orb", "data": {"z": 148.9}}
-{"timestamp": "2026-03-11 21:08:34.240", "elapsed_s": 43.05, "category": "GAME", "message": "Projectile fired", "data": {"pos": "Vec3(-3.509489, -0.04837181, 91.66185)"}}
-{"timestamp": "2026-03-11 21:08:34.780", "elapsed_s": 43.59, "category": "GAME", "message": "Meteorite shattered"}
-{"timestamp": "2026-03-11 21:08:34.781", "elapsed_s": 43.59, "category": "GAME", "message": "Projectile hit meteorite"}
-{"timestamp": "2026-03-11 21:08:35.209", "elapsed_s": 44.019, "category": "GAME", "message": "Meteorite shattered"}
-{"timestamp": "2026-03-11 21:08:35.209", "elapsed_s": 44.019, "category": "GAME", "message": "Projectile hit meteorite"}
-{"timestamp": "2026-03-11 21:08:35.927", "elapsed_s": 44.737, "category": "ORB", "message": "Drain orb hit! Energy reduced", "data": {"power": 0.51}}
-{"timestamp": "2026-03-11 21:08:35.927", "elapsed_s": 44.737, "category": "ORB", "message": "Collected drain orb", "data": {"total": 3, "power": 0.51}}
-{"timestamp": "2026-03-11 21:08:36.011", "elapsed_s": 44.82, "category": "ORB", "message": "Spawned speed_up orb", "data": {"z": 188.6}}
-{"timestamp": "2026-03-11 21:08:37.246", "elapsed_s": 46.056, "category": "GAME", "message": "Projectile fired", "data": {"pos": "Vec3(2.2937734, -2.2329297, 131.01951)"}}
-{"timestamp": "2026-03-11 21:08:37.414", "elapsed_s": 46.223, "category": "GAME", "message": "Meteorite shattered"}
-{"timestamp": "2026-03-11 21:08:37.414", "elapsed_s": 46.224, "category": "GAME", "message": "Projectile hit meteorite"}
-{"timestamp": "2026-03-11 21:08:37.814", "elapsed_s": 46.624, "category": "ORB", "message": "Spawned shooter orb", "data": {"z": 203.7}}
-{"timestamp": "2026-03-11 21:08:38.186", "elapsed_s": 46.996, "category": "GAME", "message": "Shooting mode expired"}
-{"timestamp": "2026-03-11 21:08:39.621", "elapsed_s": 48.431, "category": "ORB", "message": "Spawned slow_down orb", "data": {"z": 239.7}}
-{"timestamp": "2026-03-11 21:08:41.421", "elapsed_s": 50.231, "category": "ORB", "message": "Spawned slow_down orb", "data": {"z": 261.0}}
-{"timestamp": "2026-03-11 21:08:41.722", "elapsed_s": 50.531, "category": "COLLISION", "message": "Player hit meteorite", "data": {"distance": 190, "orbs": 3}}
-{"timestamp": "2026-03-11 21:08:41.722", "elapsed_s": 50.532, "category": "GAME", "message": "Cleaned up game entities"}
-{"timestamp": "2026-03-11 21:08:41.722", "elapsed_s": 50.532, "category": "UI", "message": "Cleared all UI panels"}
-{"timestamp": "2026-03-11 21:08:41.722", "elapsed_s": 50.532, "category": "MENU", "message": "Showing game over screen", "data": {"orbs": 3, "distance": 190}}
-{"timestamp": "2026-03-11 21:08:41.722", "elapsed_s": 50.532, "category": "STATS", "message": "Game recorded", "data": {"total_games_played": 53, "max_score_orbs": 41, "max_distance": 2692, "total_orbs_collected": 228, "total_distance_traveled": 15250, "last_games": [{"game_number": 53, "orbs_collected": 3, "distance": 190, "date": "2026-03-11 21:08:41"}, {"game_number": 52, "orbs_collected": 1, "distance": 217, "date": "2026-03-11 20:52:14"}, {"game_number": 51, "orbs_collected": 16, "distance": 775, "date": "2026-03-11 20:51:55"}]}}
+{"timestamp": "2026-03-13 15:31:34.172", "elapsed_s": 0.0, "category": "SYSTEM", "message": "Log file cleared for new session"}
+{"timestamp": "2026-03-13 15:31:34.172", "elapsed_s": 0.0, "category": "SYSTEM", "message": "Application starting", "data": {"os": "linux", "python": "3.13.11"}}
+{"timestamp": "2026-03-13 15:31:34.618", "elapsed_s": 0.447, "category": "SYSTEM", "message": "Ursina engine initialized", "data": {"platform": "linux"}}
+{"timestamp": "2026-03-13 15:31:34.622", "elapsed_s": 0.451, "category": "SYSTEM", "message": "Preloading assets..."}
+{"timestamp": "2026-03-13 15:31:35.918", "elapsed_s": 1.746, "category": "GAME", "message": "Player entity created"}
+{"timestamp": "2026-03-13 15:31:35.918", "elapsed_s": 1.746, "category": "GAME", "message": "Player spawned"}
+{"timestamp": "2026-03-13 15:31:37.081", "elapsed_s": 2.909, "category": "SYSTEM", "message": "Preloaded player model", "data": {"model": "Cool_Space_ship__0623175827_texture.obj"}}
+{"timestamp": "2026-03-13 15:31:37.081", "elapsed_s": 2.909, "category": "SYSTEM", "message": "Preloaded player texture", "data": {"texture": "Cool_Space_ship__0623175827_texture.png"}}
+{"timestamp": "2026-03-13 15:31:40.438", "elapsed_s": 6.267, "category": "SYSTEM", "message": "Preloaded meteorite model 0", "data": {"model": "meteorit_style/meteorit.obj"}}
+{"timestamp": "2026-03-13 15:31:40.702", "elapsed_s": 6.53, "category": "SYSTEM", "message": "Preloaded meteorite texture 0"}
+{"timestamp": "2026-03-13 15:31:40.702", "elapsed_s": 6.531, "category": "SYSTEM", "message": "All assets preloaded successfully"}
+{"timestamp": "2026-03-13 15:31:40.738", "elapsed_s": 6.566, "category": "UI", "message": "Loading screen hidden"}
+{"timestamp": "2026-03-13 15:31:40.738", "elapsed_s": 6.566, "category": "UI", "message": "Cleared all UI panels"}
+{"timestamp": "2026-03-13 15:31:40.738", "elapsed_s": 6.566, "category": "MENU", "message": "Showing start menu"}
+{"timestamp": "2026-03-13 15:31:40.750", "elapsed_s": 6.578, "category": "SYSTEM", "message": "Application ready - showing start menu"}
+{"timestamp": "2026-03-13 15:32:06.941", "elapsed_s": 32.769, "category": "UI", "message": "Cleared all UI panels"}
+{"timestamp": "2026-03-13 15:32:06.941", "elapsed_s": 32.769, "category": "MENU", "message": "Showing stats screen"}
+{"timestamp": "2026-03-13 15:32:06.941", "elapsed_s": 32.77, "category": "STATS", "message": "Stats loaded", "data": {"total_games_played": 53, "max_score_orbs": 41, "max_distance": 2692, "total_orbs_collected": 228, "total_distance_traveled": 15250, "last_games": [{"game_number": 53, "orbs_collected": 3, "distance": 190, "date": "2026-03-11 21:08:41"}, {"game_number": 52, "orbs_collected": 1, "distance": 217, "date": "2026-03-11 20:52:14"}, {"game_number": 51, "orbs_collected": 16, "distance": 775, "date": "2026-03-11 20:51:55"}]}}
+{"timestamp": "2026-03-13 15:32:09.791", "elapsed_s": 35.619, "category": "MENU", "message": "Navigating back to main menu"}
+{"timestamp": "2026-03-13 15:32:09.791", "elapsed_s": 35.619, "category": "UI", "message": "Cleared all UI panels"}
+{"timestamp": "2026-03-13 15:32:09.791", "elapsed_s": 35.62, "category": "MENU", "message": "Showing start menu"}
+{"timestamp": "2026-03-13 15:32:10.441", "elapsed_s": 36.269, "category": "UI", "message": "Cleared all UI panels"}
+{"timestamp": "2026-03-13 15:32:10.441", "elapsed_s": 36.269, "category": "MENU", "message": "Showing help screen"}
+{"timestamp": "2026-03-13 15:32:11.941", "elapsed_s": 37.77, "category": "MENU", "message": "Navigating back to main menu"}
+{"timestamp": "2026-03-13 15:32:11.942", "elapsed_s": 37.77, "category": "UI", "message": "Cleared all UI panels"}
+{"timestamp": "2026-03-13 15:32:11.942", "elapsed_s": 37.771, "category": "MENU", "message": "Showing start menu"}
+{"timestamp": "2026-03-13 15:32:13.542", "elapsed_s": 39.371, "category": "UI", "message": "Cleared all UI panels"}
+{"timestamp": "2026-03-13 15:32:13.543", "elapsed_s": 39.371, "category": "UI", "message": "Cleared all UI panels"}
+{"timestamp": "2026-03-13 15:32:13.543", "elapsed_s": 39.372, "category": "GAME", "message": "Cleaned up game entities"}
+{"timestamp": "2026-03-13 15:32:13.675", "elapsed_s": 39.504, "category": "GAME", "message": "Game reset complete"}
+{"timestamp": "2026-03-13 15:32:13.675", "elapsed_s": 39.504, "category": "GAME", "message": "Game started"}
+{"timestamp": "2026-03-13 15:32:13.677", "elapsed_s": 39.505, "category": "ORB", "message": "Spawned slow_down orb", "data": {"z": 79.1}}
+{"timestamp": "2026-03-13 15:32:14.727", "elapsed_s": 40.555, "category": "ORB", "message": "Collected shooter orb", "data": {"total": 1, "power": 0.93}}
+{"timestamp": "2026-03-13 15:32:15.360", "elapsed_s": 41.188, "category": "ORB", "message": "Spawned slow_down orb", "data": {"z": 87.5}}
+{"timestamp": "2026-03-13 15:32:16.940", "elapsed_s": 42.769, "category": "GAME", "message": "Projectile fired", "data": {"pos": "Vec3(2.9958236, 1.0527253, 42.983737)"}}
+{"timestamp": "2026-03-13 15:32:17.177", "elapsed_s": 43.006, "category": "ORB", "message": "Spawned power orb", "data": {"z": 108.8}}
+{"timestamp": "2026-03-13 15:32:17.908", "elapsed_s": 43.737, "category": "GAME", "message": "Projectile fired", "data": {"pos": "Vec3(3.6205842, 1.4072609, 55.05419)"}}
+{"timestamp": "2026-03-13 15:32:18.058", "elapsed_s": 43.886, "category": "GAME", "message": "Meteorite shattered"}
+{"timestamp": "2026-03-13 15:32:18.058", "elapsed_s": 43.887, "category": "GAME", "message": "Projectile hit meteorite"}
+{"timestamp": "2026-03-13 15:32:18.993", "elapsed_s": 44.822, "category": "ORB", "message": "Spawned power orb", "data": {"z": 122.2}}
+{"timestamp": "2026-03-13 15:32:19.874", "elapsed_s": 45.703, "category": "ORB", "message": "Collected slow_down orb", "data": {"total": 2, "power": 0.62}}
+{"timestamp": "2026-03-13 15:32:20.810", "elapsed_s": 46.638, "category": "ORB", "message": "Spawned power orb", "data": {"z": 146.4}}
+{"timestamp": "2026-03-13 15:32:22.624", "elapsed_s": 48.452, "category": "ORB", "message": "Spawned power orb", "data": {"z": 172.9}}
+{"timestamp": "2026-03-13 15:32:23.191", "elapsed_s": 49.02, "category": "ORB", "message": "Collected power orb", "data": {"total": 3, "power": 0.67}}
+{"timestamp": "2026-03-13 15:32:24.427", "elapsed_s": 50.255, "category": "ORB", "message": "Spawned slow_down orb", "data": {"z": 216.2}}
+{"timestamp": "2026-03-13 15:32:24.742", "elapsed_s": 50.57, "category": "GAME", "message": "Shooting mode expired"}
+{"timestamp": "2026-03-13 15:32:25.009", "elapsed_s": 50.837, "category": "ORB", "message": "Collected power orb", "data": {"total": 4, "power": 0.81}}
+{"timestamp": "2026-03-13 15:32:26.242", "elapsed_s": 52.071, "category": "ORB", "message": "Spawned power orb", "data": {"z": 233.9}}
+{"timestamp": "2026-03-13 15:32:28.059", "elapsed_s": 53.888, "category": "ORB", "message": "Spawned power orb", "data": {"z": 262.0}}
+{"timestamp": "2026-03-13 15:32:29.875", "elapsed_s": 55.704, "category": "ORB", "message": "Spawned slow_down orb", "data": {"z": 278.6}}
+{"timestamp": "2026-03-13 15:32:31.307", "elapsed_s": 57.135, "category": "ORB", "message": "Collected power orb", "data": {"total": 5, "power": 0.68}}
+{"timestamp": "2026-03-13 15:32:31.692", "elapsed_s": 57.521, "category": "ORB", "message": "Spawned power orb", "data": {"z": 301.4}}
+{"timestamp": "2026-03-13 15:32:33.491", "elapsed_s": 59.32, "category": "ORB", "message": "Spawned shooter orb", "data": {"z": 333.7}}
+{"timestamp": "2026-03-13 15:32:35.307", "elapsed_s": 61.135, "category": "ORB", "message": "Spawned power orb", "data": {"z": 352.9}}
+{"timestamp": "2026-03-13 15:32:35.907", "elapsed_s": 61.735, "category": "ORB", "message": "Collected power orb", "data": {"total": 6, "power": 0.66}}
+{"timestamp": "2026-03-13 15:32:37.109", "elapsed_s": 62.938, "category": "ORB", "message": "Spawned power orb", "data": {"z": 396.4}}
+{"timestamp": "2026-03-13 15:32:38.041", "elapsed_s": 63.87, "category": "ORB", "message": "Collected shooter orb", "data": {"total": 7, "power": 0.53}}
+{"timestamp": "2026-03-13 15:32:38.923", "elapsed_s": 64.752, "category": "ORB", "message": "Spawned power orb", "data": {"z": 400.7}}
+{"timestamp": "2026-03-13 15:32:39.623", "elapsed_s": 65.452, "category": "GAME", "message": "Projectile fired", "data": {"pos": "Vec3(0.60361933, 1.1029318, 359.0757)"}}
+{"timestamp": "2026-03-13 15:32:39.939", "elapsed_s": 65.768, "category": "GAME", "message": "Projectile fired", "data": {"pos": "Vec3(1.1743617, 1.2641587, 364.0057)"}}
+{"timestamp": "2026-03-13 15:32:40.106", "elapsed_s": 65.935, "category": "GAME", "message": "Projectile fired", "data": {"pos": "Vec3(1.2796242, 1.6308347, 366.6077)"}}
+{"timestamp": "2026-03-13 15:32:40.724", "elapsed_s": 66.553, "category": "ORB", "message": "Spawned slow_down orb", "data": {"z": 426.5}}
+{"timestamp": "2026-03-13 15:32:41.874", "elapsed_s": 67.703, "category": "GAME", "message": "Projectile fired", "data": {"pos": "Vec3(0.4309416, -0.1157699, 394.50143)"}}
+{"timestamp": "2026-03-13 15:32:42.041", "elapsed_s": 67.87, "category": "GAME", "message": "Projectile fired", "data": {"pos": "Vec3(0.28935638, -0.6416924, 397.1757)"}}
+{"timestamp": "2026-03-13 15:32:42.241", "elapsed_s": 68.069, "category": "GAME", "message": "Projectile fired", "data": {"pos": "Vec3(0.21013497, -1.3028853, 400.34915)"}}
+{"timestamp": "2026-03-13 15:32:42.324", "elapsed_s": 68.152, "category": "GAME", "message": "Meteorite shattered"}
+{"timestamp": "2026-03-13 15:32:42.324", "elapsed_s": 68.152, "category": "GAME", "message": "Projectile hit meteorite"}
+{"timestamp": "2026-03-13 15:32:42.408", "elapsed_s": 68.237, "category": "GAME", "message": "Projectile fired", "data": {"pos": "Vec3(0.1790662, -1.8224144, 403.03414)"}}
+{"timestamp": "2026-03-13 15:32:42.543", "elapsed_s": 68.371, "category": "ORB", "message": "Spawned power orb", "data": {"z": 483.3}}
+{"timestamp": "2026-03-13 15:32:44.360", "elapsed_s": 70.189, "category": "ORB", "message": "Spawned power orb", "data": {"z": 484.2}}
+{"timestamp": "2026-03-13 15:32:46.176", "elapsed_s": 72.005, "category": "ORB", "message": "Spawned drain orb", "data": {"z": 516.8}}
+{"timestamp": "2026-03-13 15:32:46.873", "elapsed_s": 72.702, "category": "GAME", "message": "Game over - out of power", "data": {"distance": 474, "orbs": 7}}
+{"timestamp": "2026-03-13 15:32:46.874", "elapsed_s": 72.703, "category": "GAME", "message": "Cleaned up game entities"}
+{"timestamp": "2026-03-13 15:32:46.875", "elapsed_s": 72.703, "category": "UI", "message": "Cleared all UI panels"}
+{"timestamp": "2026-03-13 15:32:46.875", "elapsed_s": 72.703, "category": "MENU", "message": "Showing game over screen", "data": {"orbs": 7, "distance": 474}}
+{"timestamp": "2026-03-13 15:32:46.875", "elapsed_s": 72.703, "category": "STATS", "message": "Game recorded", "data": {"total_games_played": 54, "max_score_orbs": 41, "max_distance": 2692, "total_orbs_collected": 235, "total_distance_traveled": 15724, "last_games": [{"game_number": 54, "orbs_collected": 7, "distance": 474, "date": "2026-03-13 15:32:46"}, {"game_number": 53, "orbs_collected": 3, "distance": 190, "date": "2026-03-11 21:08:41"}, {"game_number": 52, "orbs_collected": 1, "distance": 217, "date": "2026-03-11 20:52:14"}]}}
+{"timestamp": "2026-03-13 15:32:49.009", "elapsed_s": 74.838, "category": "UI", "message": "Cleared all UI panels"}
+{"timestamp": "2026-03-13 15:32:49.010", "elapsed_s": 74.838, "category": "UI", "message": "Cleared all UI panels"}
+{"timestamp": "2026-03-13 15:32:49.010", "elapsed_s": 74.839, "category": "GAME", "message": "Cleaned up game entities"}
+{"timestamp": "2026-03-13 15:32:49.011", "elapsed_s": 74.839, "category": "GAME", "message": "Game reset complete"}
+{"timestamp": "2026-03-13 15:32:49.011", "elapsed_s": 74.839, "category": "GAME", "message": "Game started"}
+{"timestamp": "2026-03-13 15:32:49.012", "elapsed_s": 74.841, "category": "ORB", "message": "Spawned power orb", "data": {"z": 68.1}}
+{"timestamp": "2026-03-13 15:32:50.826", "elapsed_s": 76.654, "category": "ORB", "message": "Spawned power orb", "data": {"z": 100.4}}
+{"timestamp": "2026-03-13 15:32:52.640", "elapsed_s": 78.469, "category": "ORB", "message": "Spawned power orb", "data": {"z": 101.3}}
+{"timestamp": "2026-03-13 15:32:54.441", "elapsed_s": 80.269, "category": "ORB", "message": "Spawned drain orb", "data": {"z": 136.7}}
+{"timestamp": "2026-03-13 15:32:55.340", "elapsed_s": 81.169, "category": "COLLISION", "message": "Player hit meteorite", "data": {"distance": 78, "orbs": 0}}
+{"timestamp": "2026-03-13 15:32:55.341", "elapsed_s": 81.169, "category": "GAME", "message": "Cleaned up game entities"}
+{"timestamp": "2026-03-13 15:32:55.341", "elapsed_s": 81.169, "category": "UI", "message": "Cleared all UI panels"}
+{"timestamp": "2026-03-13 15:32:55.341", "elapsed_s": 81.17, "category": "MENU", "message": "Showing game over screen", "data": {"orbs": 0, "distance": 78}}
+{"timestamp": "2026-03-13 15:32:55.341", "elapsed_s": 81.17, "category": "STATS", "message": "Game recorded", "data": {"total_games_played": 55, "max_score_orbs": 41, "max_distance": 2692, "total_orbs_collected": 235, "total_distance_traveled": 15802, "last_games": [{"game_number": 55, "orbs_collected": 0, "distance": 78, "date": "2026-03-13 15:32:55"}, {"game_number": 54, "orbs_collected": 7, "distance": 474, "date": "2026-03-13 15:32:46"}, {"game_number": 53, "orbs_collected": 3, "distance": 190, "date": "2026-03-11 21:08:41"}]}}
+{"timestamp": "2026-03-13 15:32:57.326", "elapsed_s": 83.154, "category": "MENU", "message": "Navigating back to main menu"}
+{"timestamp": "2026-03-13 15:32:57.327", "elapsed_s": 83.155, "category": "UI", "message": "Cleared all UI panels"}
+{"timestamp": "2026-03-13 15:32:57.327", "elapsed_s": 83.155, "category": "MENU", "message": "Showing start menu"}
+{"timestamp": "2026-03-13 15:33:03.590", "elapsed_s": 89.418, "category": "UI", "message": "Cleared all UI panels"}
+{"timestamp": "2026-03-13 15:33:03.590", "elapsed_s": 89.419, "category": "MENU", "message": "Showing stats screen"}
+{"timestamp": "2026-03-13 15:33:03.590", "elapsed_s": 89.419, "category": "STATS", "message": "Stats loaded", "data": {"total_games_played": 55, "max_score_orbs": 41, "max_distance": 2692, "total_orbs_collected": 235, "total_distance_traveled": 15802, "last_games": [{"game_number": 55, "orbs_collected": 0, "distance": 78, "date": "2026-03-13 15:32:55"}, {"game_number": 54, "orbs_collected": 7, "distance": 474, "date": "2026-03-13 15:32:46"}, {"game_number": 53, "orbs_collected": 3, "distance": 190, "date": "2026-03-11 21:08:41"}]}}
+{"timestamp": "2026-03-13 15:33:04.890", "elapsed_s": 90.718, "category": "MENU", "message": "Navigating back to main menu"}
+{"timestamp": "2026-03-13 15:33:04.890", "elapsed_s": 90.719, "category": "UI", "message": "Cleared all UI panels"}
+{"timestamp": "2026-03-13 15:33:04.891", "elapsed_s": 90.719, "category": "MENU", "message": "Showing start menu"}
+{"timestamp": "2026-03-13 15:33:05.423", "elapsed_s": 91.252, "category": "UI", "message": "Cleared all UI panels"}
+{"timestamp": "2026-03-13 15:33:05.424", "elapsed_s": 91.252, "category": "MENU", "message": "Showing help screen"}
+{"timestamp": "2026-03-13 15:33:38.224", "elapsed_s": 124.053, "category": "MENU", "message": "Navigating back to main menu"}
+{"timestamp": "2026-03-13 15:33:38.225", "elapsed_s": 124.054, "category": "UI", "message": "Cleared all UI panels"}
+{"timestamp": "2026-03-13 15:33:38.225", "elapsed_s": 124.054, "category": "MENU", "message": "Showing start menu"}
+{"timestamp": "2026-03-13 15:33:42.339", "elapsed_s": 128.168, "category": "UI", "message": "Cleared all UI panels"}
+{"timestamp": "2026-03-13 15:33:42.339", "elapsed_s": 128.168, "category": "UI", "message": "Cleared all UI panels"}
+{"timestamp": "2026-03-13 15:33:42.339", "elapsed_s": 128.168, "category": "GAME", "message": "Cleaned up game entities"}
+{"timestamp": "2026-03-13 15:33:42.340", "elapsed_s": 128.168, "category": "GAME", "message": "Game reset complete"}
+{"timestamp": "2026-03-13 15:33:42.340", "elapsed_s": 128.168, "category": "GAME", "message": "Game started"}
+{"timestamp": "2026-03-13 15:33:42.341", "elapsed_s": 128.17, "category": "ORB", "message": "Spawned power orb", "data": {"z": 65.5}}
+{"timestamp": "2026-03-13 15:33:43.525", "elapsed_s": 129.353, "category": "ORB", "message": "Collected shooter orb", "data": {"total": 1, "power": 0.93}}
+{"timestamp": "2026-03-13 15:33:44.140", "elapsed_s": 129.969, "category": "ORB", "message": "Spawned power orb", "data": {"z": 100.6}}
+{"timestamp": "2026-03-13 15:33:44.157", "elapsed_s": 129.985, "category": "GAME", "message": "Projectile fired", "data": {"pos": "Vec3(0.11417384, -0.3009933, 23.512725)"}}
+{"timestamp": "2026-03-13 15:33:45.589", "elapsed_s": 131.417, "category": "GAME", "message": "Projectile fired", "data": {"pos": "Vec3(1.5627371, -1.728472, 41.168)"}}
+{"timestamp": "2026-03-13 15:33:45.789", "elapsed_s": 131.617, "category": "GAME", "message": "Projectile fired", "data": {"pos": "Vec3(1.5673453, -2.4069967, 43.64873)"}}
+{"timestamp": "2026-03-13 15:33:45.943", "elapsed_s": 131.771, "category": "ORB", "message": "Spawned power orb", "data": {"z": 111.8}}
+{"timestamp": "2026-03-13 15:33:46.209", "elapsed_s": 132.038, "category": "GAME", "message": "Meteorite shattered"}
+{"timestamp": "2026-03-13 15:33:46.209", "elapsed_s": 132.038, "category": "GAME", "message": "Projectile hit meteorite"}
+{"timestamp": "2026-03-13 15:33:46.322", "elapsed_s": 132.15, "category": "GAME", "message": "Projectile fired", "data": {"pos": "Vec3(1.5705252, -2.5633146, 50.271862)"}}
+{"timestamp": "2026-03-13 15:33:47.305", "elapsed_s": 133.134, "category": "GAME", "message": "Projectile fired", "data": {"pos": "Vec3(1.5002377, 0.57173526, 62.62399)"}}
+{"timestamp": "2026-03-13 15:33:47.491", "elapsed_s": 133.32, "category": "GAME", "message": "Projectile fired", "data": {"pos": "Vec3(1.453385, 1.1846908, 64.91365)"}}
+{"timestamp": "2026-03-13 15:33:47.740", "elapsed_s": 133.569, "category": "GAME", "message": "Meteorite shattered"}
+{"timestamp": "2026-03-13 15:33:47.741", "elapsed_s": 133.569, "category": "GAME", "message": "Projectile hit meteorite"}
+{"timestamp": "2026-03-13 15:33:47.758", "elapsed_s": 133.587, "category": "ORB", "message": "Spawned power orb", "data": {"z": 133.0}}
+{"timestamp": "2026-03-13 15:33:49.123", "elapsed_s": 134.951, "category": "GAME", "message": "Projectile fired", "data": {"pos": "Vec3(0.81853163, 1.750751, 85.74643)"}}
+{"timestamp": "2026-03-13 15:33:49.308", "elapsed_s": 135.137, "category": "GAME", "message": "Projectile fired", "data": {"pos": "Vec3(1.0252296, 1.3923178, 88.08092)"}}
+{"timestamp": "2026-03-13 15:33:49.576", "elapsed_s": 135.404, "category": "ORB", "message": "Spawned power orb", "data": {"z": 144.7}}
+{"timestamp": "2026-03-13 15:33:49.591", "elapsed_s": 135.42, "category": "GAME", "message": "Meteorite shattered"}
+{"timestamp": "2026-03-13 15:33:49.592", "elapsed_s": 135.42, "category": "GAME", "message": "Projectile hit meteorite"}
+{"timestamp": "2026-03-13 15:33:51.392", "elapsed_s": 137.221, "category": "ORB", "message": "Spawned power orb", "data": {"z": 190.6}}
+{"timestamp": "2026-03-13 15:33:51.740", "elapsed_s": 137.569, "category": "GAME", "message": "Projectile fired", "data": {"pos": "Vec3(-1.889592, -1.5376397, 119.786354)"}}
+{"timestamp": "2026-03-13 15:33:51.857", "elapsed_s": 137.686, "category": "GAME", "message": "Projectile fired", "data": {"pos": "Vec3(-1.992818, -1.8956249, 121.30179)"}}
+{"timestamp": "2026-03-13 15:33:51.990", "elapsed_s": 137.818, "category": "GAME", "message": "Projectile fired", "data": {"pos": "Vec3(-2.0647642, -2.3325924, 123.06663)"}}
+{"timestamp": "2026-03-13 15:33:52.040", "elapsed_s": 137.868, "category": "GAME", "message": "Meteorite shattered"}
+{"timestamp": "2026-03-13 15:33:52.040", "elapsed_s": 137.868, "category": "GAME", "message": "Projectile hit meteorite"}
+{"timestamp": "2026-03-13 15:33:52.157", "elapsed_s": 137.986, "category": "GAME", "message": "Projectile fired", "data": {"pos": "Vec3(-2.1133265, -2.8955607, 125.27244)"}}
+{"timestamp": "2026-03-13 15:33:53.056", "elapsed_s": 138.884, "category": "GAME", "message": "Projectile fired", "data": {"pos": "Vec3(-2.2852666, -1.9344848, 137.25389)"}}
+{"timestamp": "2026-03-13 15:33:53.208", "elapsed_s": 139.036, "category": "ORB", "message": "Spawned slow_down orb", "data": {"z": 211.8}}
+{"timestamp": "2026-03-13 15:33:53.258", "elapsed_s": 139.086, "category": "GAME", "message": "Projectile fired", "data": {"pos": "Vec3(-2.6240153, -1.439927, 139.92697)"}}
+{"timestamp": "2026-03-13 15:33:53.508", "elapsed_s": 139.337, "category": "GAME", "message": "Projectile fired", "data": {"pos": "Vec3(-3.1408784, -1.1302369, 143.26065)"}}
+{"timestamp": "2026-03-13 15:33:53.539", "elapsed_s": 139.368, "category": "GAME", "message": "Shooting mode expired"}
+{"timestamp": "2026-03-13 15:33:53.873", "elapsed_s": 139.702, "category": "GAME", "message": "Meteorite shattered"}
+{"timestamp": "2026-03-13 15:33:53.874", "elapsed_s": 139.702, "category": "GAME", "message": "Projectile hit meteorite"}
+{"timestamp": "2026-03-13 15:33:55.007", "elapsed_s": 140.836, "category": "ORB", "message": "Spawned slow_down orb", "data": {"z": 228.2}}
+{"timestamp": "2026-03-13 15:33:56.824", "elapsed_s": 142.653, "category": "ORB", "message": "Spawned power orb", "data": {"z": 238.1}}
+{"timestamp": "2026-03-13 15:33:57.039", "elapsed_s": 142.868, "category": "ORB", "message": "Collected power orb", "data": {"total": 2, "power": 0.37}}
+{"timestamp": "2026-03-13 15:33:58.640", "elapsed_s": 144.468, "category": "ORB", "message": "Spawned power orb", "data": {"z": 282.9}}
+{"timestamp": "2026-03-13 15:34:00.392", "elapsed_s": 146.221, "category": "ORB", "message": "Collected power orb", "data": {"total": 3, "power": 0.42}}
+{"timestamp": "2026-03-13 15:34:00.455", "elapsed_s": 146.284, "category": "ORB", "message": "Spawned power orb", "data": {"z": 296.2}}
+{"timestamp": "2026-03-13 15:34:02.255", "elapsed_s": 148.084, "category": "ORB", "message": "Spawned power orb", "data": {"z": 344.4}}
+{"timestamp": "2026-03-13 15:34:03.456", "elapsed_s": 149.284, "category": "ORB", "message": "Collected power orb", "data": {"total": 4, "power": 0.48}}
+{"timestamp": "2026-03-13 15:34:04.057", "elapsed_s": 149.886, "category": "ORB", "message": "Spawned drain orb", "data": {"z": 342.8}}
+{"timestamp": "2026-03-13 15:34:04.373", "elapsed_s": 150.202, "category": "ORB", "message": "Collected power orb", "data": {"total": 5, "power": 0.68}}
+{"timestamp": "2026-03-13 15:34:05.873", "elapsed_s": 151.701, "category": "ORB", "message": "Spawned speed_up orb", "data": {"z": 382.0}}
+{"timestamp": "2026-03-13 15:34:07.690", "elapsed_s": 153.519, "category": "ORB", "message": "Spawned power orb", "data": {"z": 397.7}}
+{"timestamp": "2026-03-13 15:34:07.690", "elapsed_s": 153.519, "category": "COLLISION", "message": "Player hit meteorite", "data": {"distance": 346, "orbs": 5}}
+{"timestamp": "2026-03-13 15:34:07.691", "elapsed_s": 153.519, "category": "GAME", "message": "Cleaned up game entities"}
+{"timestamp": "2026-03-13 15:34:07.691", "elapsed_s": 153.519, "category": "UI", "message": "Cleared all UI panels"}
+{"timestamp": "2026-03-13 15:34:07.691", "elapsed_s": 153.519, "category": "MENU", "message": "Showing game over screen", "data": {"orbs": 5, "distance": 346}}
+{"timestamp": "2026-03-13 15:34:07.691", "elapsed_s": 153.52, "category": "STATS", "message": "Game recorded", "data": {"total_games_played": 56, "max_score_orbs": 41, "max_distance": 2692, "total_orbs_collected": 240, "total_distance_traveled": 16148, "last_games": [{"game_number": 56, "orbs_collected": 5, "distance": 346, "date": "2026-03-13 15:34:07"}, {"game_number": 55, "orbs_collected": 0, "distance": 78, "date": "2026-03-13 15:32:55"}, {"game_number": 54, "orbs_collected": 7, "distance": 474, "date": "2026-03-13 15:32:46"}]}}
+{"timestamp": "2026-03-13 15:34:09.472", "elapsed_s": 155.3, "category": "MENU", "message": "Navigating back to main menu"}
+{"timestamp": "2026-03-13 15:34:09.472", "elapsed_s": 155.301, "category": "UI", "message": "Cleared all UI panels"}
+{"timestamp": "2026-03-13 15:34:09.472", "elapsed_s": 155.301, "category": "MENU", "message": "Showing start menu"}
+{"timestamp": "2026-03-13 15:34:17.023", "elapsed_s": 162.852, "category": "UI", "message": "Cleared all UI panels"}
+{"timestamp": "2026-03-13 15:34:17.023", "elapsed_s": 162.852, "category": "UI", "message": "Cleared all UI panels"}
+{"timestamp": "2026-03-13 15:34:17.023", "elapsed_s": 162.852, "category": "GAME", "message": "Cleaned up game entities"}
+{"timestamp": "2026-03-13 15:34:17.025", "elapsed_s": 162.853, "category": "GAME", "message": "Game reset complete"}
+{"timestamp": "2026-03-13 15:34:17.025", "elapsed_s": 162.853, "category": "GAME", "message": "Game started"}
+{"timestamp": "2026-03-13 15:34:17.027", "elapsed_s": 162.855, "category": "ORB", "message": "Spawned speed_up orb", "data": {"z": 79.8}}
+{"timestamp": "2026-03-13 15:34:18.208", "elapsed_s": 164.037, "category": "ORB", "message": "Collected shooter orb", "data": {"total": 1, "power": 0.93}}
+{"timestamp": "2026-03-13 15:34:18.824", "elapsed_s": 164.653, "category": "ORB", "message": "Spawned slow_down orb", "data": {"z": 96.5}}
+{"timestamp": "2026-03-13 15:34:20.644", "elapsed_s": 166.472, "category": "ORB", "message": "Spawned power orb", "data": {"z": 96.7}}
+{"timestamp": "2026-03-13 15:34:21.155", "elapsed_s": 166.984, "category": "GAME", "message": "Projectile fired", "data": {"pos": "Vec3(0.05221007, 1.1040772, 52.137485)"}}
+{"timestamp": "2026-03-13 15:34:21.357", "elapsed_s": 167.186, "category": "GAME", "message": "Projectile fired", "data": {"pos": "Vec3(0.583672, 1.3940691, 54.633434)"}}
+{"timestamp": "2026-03-13 15:34:21.557", "elapsed_s": 167.386, "category": "GAME", "message": "Projectile fired", "data": {"pos": "Vec3(1.0978596, 1.8019987, 57.154644)"}}
+{"timestamp": "2026-03-13 15:34:21.755", "elapsed_s": 167.584, "category": "GAME", "message": "Projectile fired", "data": {"pos": "Vec3(1.603617, 2.2409417, 59.655246)"}}
+{"timestamp": "2026-03-13 15:34:21.989", "elapsed_s": 167.817, "category": "GAME", "message": "Projectile fired", "data": {"pos": "Vec3(2.2633786, 2.4110023, 62.610736)"}}
+{"timestamp": "2026-03-13 15:34:22.255", "elapsed_s": 168.084, "category": "GAME", "message": "Projectile fired", "data": {"pos": "Vec3(2.9223375, 2.0565807, 65.966674)"}}
+{"timestamp": "2026-03-13 15:34:22.461", "elapsed_s": 168.289, "category": "ORB", "message": "Spawned power orb", "data": {"z": 127.1}}
+{"timestamp": "2026-03-13 15:34:23.057", "elapsed_s": 168.885, "category": "GAME", "message": "Projectile fired", "data": {"pos": "Vec3(2.4433422, 0.36477735, 76.12555)"}}
+{"timestamp": "2026-03-13 15:34:23.289", "elapsed_s": 169.117, "category": "GAME", "message": "Projectile fired", "data": {"pos": "Vec3(2.2786152, 0.7655225, 79.09272)"}}
+{"timestamp": "2026-03-13 15:34:23.623", "elapsed_s": 169.451, "category": "COLLISION", "message": "Player hit meteorite", "data": {"distance": 82, "orbs": 1}}
+{"timestamp": "2026-03-13 15:34:23.623", "elapsed_s": 169.452, "category": "GAME", "message": "Cleaned up game entities"}
+{"timestamp": "2026-03-13 15:34:23.624", "elapsed_s": 169.452, "category": "UI", "message": "Cleared all UI panels"}
+{"timestamp": "2026-03-13 15:34:23.624", "elapsed_s": 169.452, "category": "MENU", "message": "Showing game over screen", "data": {"orbs": 1, "distance": 82}}
+{"timestamp": "2026-03-13 15:34:23.624", "elapsed_s": 169.453, "category": "STATS", "message": "Game recorded", "data": {"total_games_played": 57, "max_score_orbs": 41, "max_distance": 2692, "total_orbs_collected": 241, "total_distance_traveled": 16230, "last_games": [{"game_number": 57, "orbs_collected": 1, "distance": 82, "date": "2026-03-13 15:34:23"}, {"game_number": 56, "orbs_collected": 5, "distance": 346, "date": "2026-03-13 15:34:07"}, {"game_number": 55, "orbs_collected": 0, "distance": 78, "date": "2026-03-13 15:32:55"}]}}
+{"timestamp": "2026-03-13 15:34:25.423", "elapsed_s": 171.252, "category": "MENU", "message": "Navigating back to main menu"}
+{"timestamp": "2026-03-13 15:34:25.424", "elapsed_s": 171.252, "category": "UI", "message": "Cleared all UI panels"}
+{"timestamp": "2026-03-13 15:34:25.424", "elapsed_s": 171.252, "category": "MENU", "message": "Showing start menu"}
