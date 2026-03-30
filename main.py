@@ -12,9 +12,14 @@ import math
 from game_logger import log, clear_log
 from game_stats import load_stats, record_game
 from controller import (
-    GameController, get_controller_mappings,
-    BUTTON_SHOOT, BUTTON_PAUSE, BUTTON_CONFIRM, BUTTON_BACK,
+    GameController,
+    get_controller_mappings,
+    BUTTON_SHOOT,
+    BUTTON_PAUSE,
+    BUTTON_CONFIRM,
+    BUTTON_BACK,
 )
+from space_background import SpaceBackground
 
 # =============================================================================
 #  CONFIGURATION  -  Edit these values to tweak the game easily
@@ -143,16 +148,9 @@ window.exit_button.visible = False
 window.fps_counter.enabled = SHOW_FPS
 window.color = color.black
 
-# -- Space background (flat quad parented to camera, no stretching) --
-_bg_sky = Entity(
-    parent=camera,
-    model="quad",
-    texture="backround/space.png",
-    scale=(863, 485),
-    position=(0, 0, 1000),
-    unlit=True,
-    color=color.white,
-)
+# -- Dynamic 3D space background (replaces old flat quad) --
+space_bg = SpaceBackground()
+log("SYSTEM", "Dynamic 3D space background created")
 
 log("SYSTEM", "Ursina engine initialized", {"platform": sys.platform})
 
@@ -728,22 +726,26 @@ def show_start_menu():
 
     _btns = []
     _btns.append(make_button(menu_panel, "START GAME", y=-0.02, on_click=start_game))
-    _btns.append(make_button(
-        menu_panel,
-        "STATS",
-        y=-0.07,
-        on_click=show_stats_menu,
-        btn_color=COLOR_PURPLE,
-        hover_color=COLOR_PURPLE_HOVER,
-    ))
-    _btns.append(make_button(
-        menu_panel,
-        "HELP & CONTROLS",
-        y=-0.12,
-        on_click=show_help,
-        btn_color=COLOR_ORANGE,
-        hover_color=COLOR_ORANGE_HOVER,
-    ))
+    _btns.append(
+        make_button(
+            menu_panel,
+            "STATS",
+            y=-0.07,
+            on_click=show_stats_menu,
+            btn_color=COLOR_PURPLE,
+            hover_color=COLOR_PURPLE_HOVER,
+        )
+    )
+    _btns.append(
+        make_button(
+            menu_panel,
+            "HELP & CONTROLS",
+            y=-0.12,
+            on_click=show_help,
+            btn_color=COLOR_ORANGE,
+            hover_color=COLOR_ORANGE_HOVER,
+        )
+    )
     _register_menu_buttons(_btns)
 
     # Footer
@@ -776,12 +778,12 @@ def show_start_menu():
 
 
 # -- Scrollable help screen state --
-_help_content = None       # Entity holding all scrollable content
-_help_scroll_y = 0.0       # Current scroll offset
-HELP_SCROLL_SPEED = 0.05   # Scroll increment per mouse wheel tick
+_help_content = None  # Entity holding all scrollable content
+_help_scroll_y = 0.0  # Current scroll offset
+HELP_SCROLL_SPEED = 0.05  # Scroll increment per mouse wheel tick
 HELP_SCROLL_STICK_SPEED = 0.35  # Scroll speed for controller stick (units/sec)
-HELP_SCROLL_MIN = 0.0      # Top (no scroll up past start)
-HELP_SCROLL_MAX = 0.65     # Maximum scroll down distance
+HELP_SCROLL_MIN = 0.0  # Top (no scroll up past start)
+HELP_SCROLL_MAX = 0.65  # Maximum scroll down distance
 
 
 def show_help(back_fn=None):
@@ -804,32 +806,72 @@ def show_help(back_fn=None):
     )
 
     # --- Fixed header (stays on screen) ---
-    Text(parent=help_panel, text="CONTROLS & HELP", y=0.44, scale=0.9,
-         origin=(0, 0), color=color.yellow, z=-0.5)
-    Entity(parent=help_panel, model="quad", color=color.yellow,
-           scale=(0.50, 0.002), y=0.415, z=-0.1)
+    Text(
+        parent=help_panel,
+        text="CONTROLS & HELP",
+        y=0.44,
+        scale=0.9,
+        origin=(0, 0),
+        color=color.yellow,
+        z=-0.5,
+    )
+    Entity(
+        parent=help_panel,
+        model="quad",
+        color=color.yellow,
+        scale=(0.50, 0.002),
+        y=0.415,
+        z=-0.1,
+    )
 
     # Scroll hint
-    Text(parent=help_panel, text="Scroll: Mouse wheel / Controller stick",
-         y=0.395, scale=0.35, origin=(0, 0), color=COLOR_TEXT_DIM, z=-0.5)
+    Text(
+        parent=help_panel,
+        text="Scroll: Mouse wheel / Controller stick",
+        y=0.395,
+        scale=0.35,
+        origin=(0, 0),
+        color=COLOR_TEXT_DIM,
+        z=-0.5,
+    )
 
     # --- Scrollable content container ---
     _help_content = Entity(parent=help_panel, z=-0.2)
 
     # -- Build content starting just above screen center --
-    cy = 0.05   # cursor y position inside _help_content
+    cy = 0.05  # cursor y position inside _help_content
 
-    Text(parent=_help_content, text="Survive as long as you can!", y=cy,
-         scale=0.5, origin=(0, 0), color=COLOR_TEXT_DIM, z=-0.5)
+    Text(
+        parent=_help_content,
+        text="Survive as long as you can!",
+        y=cy,
+        scale=0.5,
+        origin=(0, 0),
+        color=COLOR_TEXT_DIM,
+        z=-0.5,
+    )
     cy -= 0.035
 
-    Entity(parent=_help_content, model="quad", color=Color(1, 1, 1, 0.15),
-           scale=(0.35, 0.001), y=cy, z=-0.1)
+    Entity(
+        parent=_help_content,
+        model="quad",
+        color=Color(1, 1, 1, 0.15),
+        scale=(0.35, 0.001),
+        y=cy,
+        z=-0.1,
+    )
     cy -= 0.03
 
     # ── Keyboard Controls ──
-    Text(parent=_help_content, text="KEYBOARD CONTROLS", y=cy, scale=0.6,
-         origin=(0, 0), color=COLOR_ACCENT, z=-0.5)
+    Text(
+        parent=_help_content,
+        text="KEYBOARD CONTROLS",
+        y=cy,
+        scale=0.6,
+        origin=(0, 0),
+        color=COLOR_ACCENT,
+        z=-0.5,
+    )
     cy -= 0.03
     kb_lines = [
         "W / S       :  Up / Down",
@@ -838,35 +880,73 @@ def show_help(back_fn=None):
         "ESC         :  Pause Menu",
     ]
     for line in kb_lines:
-        Text(parent=_help_content, text=line, y=cy, scale=0.45,
-             origin=(0, 0), color=COLOR_TEXT, z=-0.5)
+        Text(
+            parent=_help_content,
+            text=line,
+            y=cy,
+            scale=0.45,
+            origin=(0, 0),
+            color=COLOR_TEXT,
+            z=-0.5,
+        )
         cy -= 0.025
 
     cy -= 0.01
-    Entity(parent=_help_content, model="quad", color=Color(1, 1, 1, 0.15),
-           scale=(0.35, 0.001), y=cy, z=-0.1)
+    Entity(
+        parent=_help_content,
+        model="quad",
+        color=Color(1, 1, 1, 0.15),
+        scale=(0.35, 0.001),
+        y=cy,
+        z=-0.1,
+    )
     cy -= 0.03
 
     # ── Controller Controls (auto-generated from mapping) ──
-    Text(parent=_help_content, text="CONTROLLER CONTROLS", y=cy, scale=0.6,
-         origin=(0, 0), color=Color(0.2, 0.8, 1.0, 1.0), z=-0.5)
+    Text(
+        parent=_help_content,
+        text="CONTROLLER CONTROLS",
+        y=cy,
+        scale=0.6,
+        origin=(0, 0),
+        color=Color(0.2, 0.8, 1.0, 1.0),
+        z=-0.5,
+    )
     cy -= 0.03
     ctrl_mappings = get_controller_mappings()
     for btn_label, action in ctrl_mappings:
-        Text(parent=_help_content,
-             text=f"{btn_label:<12s}:  {action}",
-             y=cy, scale=0.45,
-             origin=(0, 0), color=COLOR_TEXT, z=-0.5)
+        Text(
+            parent=_help_content,
+            text=f"{btn_label:<12s}:  {action}",
+            y=cy,
+            scale=0.45,
+            origin=(0, 0),
+            color=COLOR_TEXT,
+            z=-0.5,
+        )
         cy -= 0.025
 
     cy -= 0.01
-    Entity(parent=_help_content, model="quad", color=Color(1, 1, 1, 0.15),
-           scale=(0.35, 0.001), y=cy, z=-0.1)
+    Entity(
+        parent=_help_content,
+        model="quad",
+        color=Color(1, 1, 1, 0.15),
+        scale=(0.35, 0.001),
+        y=cy,
+        z=-0.1,
+    )
     cy -= 0.03
 
     # ── Orb Types ──
-    Text(parent=_help_content, text="ORB TYPES", y=cy, scale=0.6,
-         origin=(0, 0), color=COLOR_ORANGE, z=-0.5)
+    Text(
+        parent=_help_content,
+        text="ORB TYPES",
+        y=cy,
+        scale=0.6,
+        origin=(0, 0),
+        color=COLOR_ORANGE,
+        z=-0.5,
+    )
     cy -= 0.03
     orb_info = [
         ("Green   - Power    : Restores energy", color.lime),
@@ -876,28 +956,59 @@ def show_help(back_fn=None):
         ("Red     - Shooter  : Shoot for 10s", color.red),
     ]
     for txt, clr in orb_info:
-        Text(parent=_help_content, text=txt, y=cy, scale=0.42,
-             origin=(0, 0), color=clr, z=-0.5)
+        Text(
+            parent=_help_content,
+            text=txt,
+            y=cy,
+            scale=0.42,
+            origin=(0, 0),
+            color=clr,
+            z=-0.5,
+        )
         cy -= 0.025
 
     cy -= 0.01
-    Entity(parent=_help_content, model="quad", color=Color(1, 1, 1, 0.15),
-           scale=(0.35, 0.001), y=cy, z=-0.1)
+    Entity(
+        parent=_help_content,
+        model="quad",
+        color=Color(1, 1, 1, 0.15),
+        scale=(0.35, 0.001),
+        y=cy,
+        z=-0.1,
+    )
     cy -= 0.03
 
     # ── Gameplay Tips ──
-    Text(parent=_help_content, text="GAMEPLAY", y=cy, scale=0.6,
-         origin=(0, 0), color=color.lime, z=-0.5)
+    Text(
+        parent=_help_content,
+        text="GAMEPLAY",
+        y=cy,
+        scale=0.6,
+        origin=(0, 0),
+        color=color.lime,
+        z=-0.5,
+    )
     cy -= 0.03
-    Text(parent=_help_content,
-         text="- Avoid meteorites\n- Collect orbs to stay alive\n- Keep power bar up\n- Space / RB to shoot (red orb)",
-         y=cy, scale=0.42, origin=(0, 0), color=COLOR_TEXT, z=-0.5)
+    Text(
+        parent=_help_content,
+        text="- Avoid meteorites\n- Collect orbs to stay alive\n- Keep power bar up\n- Space / RB to shoot (red orb)",
+        y=cy,
+        scale=0.42,
+        origin=(0, 0),
+        color=COLOR_TEXT,
+        z=-0.5,
+    )
 
     # --- Fixed footer with BACK button ---
     # Dark gradient strip at bottom so button is always readable
-    Entity(parent=help_panel, model="quad",
-           color=Color(12 / 255, 12 / 255, 28 / 255, 1.0),
-           scale=(2, 0.12), y=-0.44, z=-0.3)
+    Entity(
+        parent=help_panel,
+        model="quad",
+        color=Color(12 / 255, 12 / 255, 28 / 255, 1.0),
+        scale=(2, 0.12),
+        y=-0.44,
+        z=-0.3,
+    )
     _btns = []
     _btns.append(make_button(help_panel, "BACK", y=-0.44, on_click=back_fn))
     _register_menu_buttons(_btns, back_fn=back_fn)
@@ -908,9 +1019,7 @@ def _scroll_help(amount):
     global _help_scroll_y
     if _help_content is None:
         return
-    _help_scroll_y = clamp(
-        _help_scroll_y + amount, HELP_SCROLL_MIN, HELP_SCROLL_MAX
-    )
+    _help_scroll_y = clamp(_help_scroll_y + amount, HELP_SCROLL_MIN, HELP_SCROLL_MAX)
     _help_content.y = _help_scroll_y
 
 
@@ -1037,12 +1146,14 @@ def show_stats_menu():
         )
 
     _btns = []
-    _btns.append(make_button(
-        stats_panel,
-        "BACK TO MENU",
-        y=-0.20,
-        on_click=back_to_menu,
-    ))
+    _btns.append(
+        make_button(
+            stats_panel,
+            "BACK TO MENU",
+            y=-0.20,
+            on_click=back_to_menu,
+        )
+    )
     _register_menu_buttons(_btns, back_fn=back_to_menu)
 
 
@@ -1165,28 +1276,34 @@ def show_game_over():
 
     btn_y = sep_y - 0.035
     _btns = []
-    _btns.append(make_button(
-        game_over_panel,
-        "PLAY AGAIN",
-        y=btn_y,
-        on_click=start_game,
-    ))
-    _btns.append(make_button(
-        game_over_panel,
-        "VIEW STATS",
-        y=btn_y - 0.045,
-        on_click=show_stats_menu,
-        btn_color=COLOR_PURPLE,
-        hover_color=COLOR_PURPLE_HOVER,
-    ))
-    _btns.append(make_button(
-        game_over_panel,
-        "MAIN MENU",
-        y=btn_y - 0.09,
-        on_click=back_to_menu,
-        btn_color=COLOR_ORANGE,
-        hover_color=COLOR_ORANGE_HOVER,
-    ))
+    _btns.append(
+        make_button(
+            game_over_panel,
+            "PLAY AGAIN",
+            y=btn_y,
+            on_click=start_game,
+        )
+    )
+    _btns.append(
+        make_button(
+            game_over_panel,
+            "VIEW STATS",
+            y=btn_y - 0.045,
+            on_click=show_stats_menu,
+            btn_color=COLOR_PURPLE,
+            hover_color=COLOR_PURPLE_HOVER,
+        )
+    )
+    _btns.append(
+        make_button(
+            game_over_panel,
+            "MAIN MENU",
+            y=btn_y - 0.09,
+            on_click=back_to_menu,
+            btn_color=COLOR_ORANGE,
+            hover_color=COLOR_ORANGE_HOVER,
+        )
+    )
     _register_menu_buttons(_btns)
 
 
@@ -1216,35 +1333,71 @@ def show_pause_menu():
 
     # Semi-transparent overlay so the game world is still visible behind
     pause_panel = Entity(
-        parent=camera.ui, model="quad",
-        color=Color(0, 0, 0, 0.75), scale=(2, 2), z=5,
+        parent=camera.ui,
+        model="quad",
+        color=Color(0, 0, 0, 0.75),
+        scale=(2, 2),
+        z=5,
     )
 
-    Text(parent=pause_panel, text="PAUSED", y=0.15, scale=1.8,
-         origin=(0, 0), color=COLOR_ACCENT, z=-0.5)
+    Text(
+        parent=pause_panel,
+        text="PAUSED",
+        y=0.15,
+        scale=1.8,
+        origin=(0, 0),
+        color=COLOR_ACCENT,
+        z=-0.5,
+    )
 
-    Entity(parent=pause_panel, model="quad",
-           color=Color(1, 1, 1, 0.15), scale=(0.3, 0.001), y=0.09, z=-0.1)
+    Entity(
+        parent=pause_panel,
+        model="quad",
+        color=Color(1, 1, 1, 0.15),
+        scale=(0.3, 0.001),
+        y=0.09,
+        z=-0.1,
+    )
 
     _btns = []
-    _btns.append(make_button(
-        pause_panel, "RESUME GAME", y=0.04, on_click=_resume_from_pause,
-    ))
-    _btns.append(make_button(
-        pause_panel, "HELP & CONTROLS", y=-0.01,
-        on_click=_pause_show_help,
-        btn_color=COLOR_ORANGE, hover_color=COLOR_ORANGE_HOVER,
-    ))
-    _btns.append(make_button(
-        pause_panel, "RETURN TO MAIN MENU", y=-0.06,
-        on_click=_pause_return_to_menu,
-        btn_color=COLOR_PURPLE, hover_color=COLOR_PURPLE_HOVER,
-    ))
-    _btns.append(make_button(
-        pause_panel, "QUIT GAME", y=-0.11,
-        on_click=application.quit,
-        btn_color=color.red, hover_color=Color(1, 0.3, 0.3, 1),
-    ))
+    _btns.append(
+        make_button(
+            pause_panel,
+            "RESUME GAME",
+            y=0.04,
+            on_click=_resume_from_pause,
+        )
+    )
+    _btns.append(
+        make_button(
+            pause_panel,
+            "HELP & CONTROLS",
+            y=-0.01,
+            on_click=_pause_show_help,
+            btn_color=COLOR_ORANGE,
+            hover_color=COLOR_ORANGE_HOVER,
+        )
+    )
+    _btns.append(
+        make_button(
+            pause_panel,
+            "RETURN TO MAIN MENU",
+            y=-0.06,
+            on_click=_pause_return_to_menu,
+            btn_color=COLOR_PURPLE,
+            hover_color=COLOR_PURPLE_HOVER,
+        )
+    )
+    _btns.append(
+        make_button(
+            pause_panel,
+            "QUIT GAME",
+            y=-0.11,
+            on_click=application.quit,
+            btn_color=color.red,
+            hover_color=Color(1, 0.3, 0.3, 1),
+        )
+    )
     _register_menu_buttons(_btns, back_fn=_resume_from_pause)
 
 
@@ -1545,6 +1698,9 @@ def update():
         player.z + CAMERA_OFFSET.z,
     )
     camera.rotation = (CAMERA_PITCH, 0, 0)
+
+    # Update 3D space background (parallax offsets, nebula rotation)
+    space_bg.update(player, player.velocity, time.dt)
 
     # Ship tilt
     player.target_rotation_x = clamp(

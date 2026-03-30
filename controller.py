@@ -16,6 +16,7 @@ Usage:
 # pygame is optional — game works with keyboard alone if not installed
 try:
     import pygame
+
     PYGAME_AVAILABLE = True
 except ImportError:
     PYGAME_AVAILABLE = False
@@ -24,25 +25,25 @@ except ImportError:
 #  BUTTON MAPPING CONSTANTS
 # =============================================================================
 
-BUTTON_SHOOT = 5        # RB  – right bumper / shoulder
-BUTTON_PAUSE = 1        # B1  – pause / menu toggle
-BUTTON_CONFIRM = 0      # A   – confirm / select
-BUTTON_BACK = 1         # B   – back / cancel (same as pause; contexts don't overlap)
+BUTTON_SHOOT = 5  # RB  – right bumper / shoulder
+BUTTON_PAUSE = 1  # B1  – pause / menu toggle
+BUTTON_CONFIRM = 0  # A   – confirm / select
+BUTTON_BACK = 1  # B   – back / cancel (same as pause; contexts don't overlap)
 
 # =============================================================================
 #  ANALOG STICK CONSTANTS
 # =============================================================================
 
-STICK_DEADZONE = 0.2    # Ignore input below this threshold
-AXIS_X = 0              # Left stick horizontal axis index
-AXIS_Y = 1              # Left stick vertical axis index
+STICK_DEADZONE = 0.2  # Ignore input below this threshold
+AXIS_X = 0  # Left stick horizontal axis index
+AXIS_Y = 1  # Left stick vertical axis index
 
 # =============================================================================
 #  VIBRATION / HAPTIC PRESETS  (low_freq, high_freq, duration_ms)
 # =============================================================================
 
-VIBRATION_METEOR_DESTROY = (0.3, 0.3, 150)   # Short, light
-VIBRATION_PLAYER_DEATH   = (0.8, 0.8, 400)   # Longer, stronger
+VIBRATION_METEOR_DESTROY = (0.3, 0.3, 150)  # Short, light
+VIBRATION_PLAYER_DEATH = (0.8, 0.8, 400)  # Longer, stronger
 
 # =============================================================================
 #  MENU NAVIGATION
@@ -54,6 +55,7 @@ MENU_NAV_COOLDOWN = 0.22  # Seconds between stick-driven menu ticks
 # =============================================================================
 #  GAMECONTROLLER CLASS
 # =============================================================================
+
 
 class GameController:
     """Manages a single gamepad via the pygame joystick subsystem."""
@@ -179,7 +181,7 @@ class GameController:
             return
         try:
             for i in range(self.joystick.get_numbuttons()):
-                self._last_buttons[i] = (self.joystick.get_button(i) == 1)
+                self._last_buttons[i] = self.joystick.get_button(i) == 1
         except Exception:
             self._last_buttons = {}
 
@@ -197,10 +199,10 @@ class GameController:
         _, y = self.get_stick()
         if y > 0.5:
             self._menu_nav_timer = MENU_NAV_COOLDOWN
-            return -1   # stick up  → selection moves up
+            return -1  # stick up  → selection moves up
         elif y < -0.5:
             self._menu_nav_timer = MENU_NAV_COOLDOWN
-            return 1    # stick down → selection moves down
+            return 1  # stick down → selection moves down
         return 0
 
     # ── Haptic feedback ────────────────────────────────────────────────────
@@ -241,6 +243,7 @@ class GameController:
 # =============================================================================
 #  MAPPING DICTIONARY  (auto-generates help-menu content)
 # =============================================================================
+
 
 def get_controller_mappings():
     """Return an ordered dict of controller mappings for the help menu."""
