@@ -27,26 +27,26 @@ import math
 # Each layer: (star_count, z_depth, parallax_factor, size_min, size_max)
 # parallax_factor multiplied by (player_pos * depth) gives the offset.
 STAR_LAYERS = [
-    (350, 950, 0.0004, 0.05, 0.18),   # Far — tiny pinpoints
-    (200, 700, 0.0015, 0.08, 0.25),   # Mid — small dots
-    (90,  400, 0.005,  0.10, 0.35),   # Near — still small but slightly brighter
+    (350, 950, 0.0004, 0.05, 0.18),  # Far — tiny pinpoints
+    (200, 700, 0.0015, 0.08, 0.25),  # Mid — small dots
+    (90, 400, 0.005, 0.10, 0.35),  # Near — still small but slightly brighter
 ]
 
-STAR_FIELD_W = 500   # Horizontal spread
-STAR_FIELD_H = 350   # Vertical spread
+STAR_FIELD_W = 500  # Horizontal spread
+STAR_FIELD_H = 350  # Vertical spread
 
 # Weighted star colour table  (colour, weight)
 _STAR_PALETTE = [
-    (Color(1.0,  1.0,  1.0,  1.0), 30),   # Pure white
-    (Color(0.90, 0.93, 1.0,  1.0), 18),   # Cool white
-    (Color(1.0,  0.96, 0.88, 1.0), 10),   # Warm white
-    (Color(0.55, 0.75, 1.0,  1.0), 12),   # Soft blue
-    (Color(0.40, 0.60, 1.0,  1.0),  8),   # Vivid blue
-    (Color(0.30, 0.85, 1.0,  1.0),  6),   # Cyan / teal
-    (Color(0.70, 0.50, 1.0,  1.0),  5),   # Purple
-    (Color(1.0,  0.55, 0.70, 1.0),  4),   # Pink
-    (Color(1.0,  0.80, 0.40, 1.0),  4),   # Gold / amber
-    (Color(0.45, 1.0,  0.65, 1.0),  3),   # Green nebula glow
+    (Color(1.0, 1.0, 1.0, 1.0), 30),  # Pure white
+    (Color(0.90, 0.93, 1.0, 1.0), 18),  # Cool white
+    (Color(1.0, 0.96, 0.88, 1.0), 10),  # Warm white
+    (Color(0.55, 0.75, 1.0, 1.0), 12),  # Soft blue
+    (Color(0.40, 0.60, 1.0, 1.0), 8),  # Vivid blue
+    (Color(0.30, 0.85, 1.0, 1.0), 6),  # Cyan / teal
+    (Color(0.70, 0.50, 1.0, 1.0), 5),  # Purple
+    (Color(1.0, 0.55, 0.70, 1.0), 4),  # Pink
+    (Color(1.0, 0.80, 0.40, 1.0), 4),  # Gold / amber
+    (Color(0.45, 1.0, 0.65, 1.0), 3),  # Green nebula glow
 ]
 _PALETTE_TOTAL = sum(w for _, w in _STAR_PALETTE)
 
@@ -57,7 +57,7 @@ NEBULA_ALPHA = 0.06
 NEBULA_SCALE_RANGE = (120, 260)
 # Parallax lerp speed — lower = smoother but slower response
 PARALLAX_LERP_SPEED = 1.5
-NEBULA_ROTATE_SPEED = 0.7          # degrees / second
+NEBULA_ROTATE_SPEED = 0.7  # degrees / second
 NEBULA_COLORS = [
     Color(0.15, 0.05, 0.35, 1.0),  # Purple
     Color(0.05, 0.12, 0.35, 1.0),  # Blue
@@ -68,6 +68,7 @@ NEBULA_COLORS = [
 # =============================================================================
 #  HELPERS
 # =============================================================================
+
 
 def _pick_color():
     """Weighted random star colour."""
@@ -111,12 +112,13 @@ def _build_star_mesh(count, width, height, smin, smax):
         cols += [c, c, c, c]
         tris += [(b, b + 1, b + 2), (b, b + 2, b + 3)]
 
-    return Mesh(vertices=verts, triangles=tris, colors=cols, mode='triangle')
+    return Mesh(vertices=verts, triangles=tris, colors=cols, mode="triangle")
 
 
 # =============================================================================
 #  SPACE BACKGROUND CLASS
 # =============================================================================
+
 
 class SpaceBackground:
     """
@@ -129,8 +131,8 @@ class SpaceBackground:
     """
 
     def __init__(self):
-        self._layers = []    # [(Entity, parallax_factor, current_x, current_y), ...]
-        self._nebulas = []   # [(Entity, rot_speed), ...]
+        self._layers = []  # [(Entity, parallax_factor, current_x, current_y), ...]
+        self._nebulas = []  # [(Entity, rot_speed), ...]
 
         self._build_star_layers()
         self._build_nebulas()
@@ -156,11 +158,10 @@ class SpaceBackground:
             sc = uniform(*NEBULA_SCALE_RANGE)
             ent = Entity(
                 parent=camera,
-                model='quad',
+                model="quad",
                 color=Color(nc.r, nc.g, nc.b, NEBULA_ALPHA),
                 scale=(sc, sc * uniform(0.4, 0.7)),
-                position=(uniform(-70, 70), uniform(-40, 40),
-                          NEBULA_DEPTH + i * 8),
+                position=(uniform(-70, 70), uniform(-40, 40), NEBULA_DEPTH + i * 8),
                 rotation_z=uniform(0, 360),
                 unlit=True,
             )
@@ -178,8 +179,8 @@ class SpaceBackground:
         if dt <= 0:
             return
 
-        px = getattr(player_pos, 'x', 0)
-        py = getattr(player_pos, 'y', 0)
+        px = getattr(player_pos, "x", 0)
+        py = getattr(player_pos, "y", 0)
         t = min(PARALLAX_LERP_SPEED * dt, 1.0)  # Lerp factor, capped at 1
 
         for layer in self._layers:
@@ -208,10 +209,14 @@ class SpaceBackground:
 
     def destroy(self):
         for layer in self._layers:
-            try: destroy(layer[0])
-            except Exception: pass
+            try:
+                destroy(layer[0])
+            except Exception:
+                pass
         for ent, _ in self._nebulas:
-            try: destroy(ent)
-            except Exception: pass
+            try:
+                destroy(ent)
+            except Exception:
+                pass
         self._layers.clear()
         self._nebulas.clear()
