@@ -11,6 +11,10 @@ import math
 
 from game_logger import log, clear_log
 from game_stats import load_stats, record_game
+from controller import (
+    GameController, get_controller_mappings,
+    BUTTON_SHOOT, BUTTON_PAUSE, BUTTON_CONFIRM, BUTTON_BACK,
+)
 
 # =============================================================================
 #  CONFIGURATION  -  Edit these values to tweak the game easily
@@ -95,6 +99,15 @@ COLOR_TEXT_DIM = Color(180 / 255, 180 / 255, 200 / 255, 1.0)
 GAME_VERSION = "v2.0"
 CREDITS = "Created by Wracker"
 
+# --- Game States ---
+STATE_LOADING = "loading"
+STATE_MAIN_MENU = "main_menu"
+STATE_PLAYING = "playing"
+STATE_PAUSED = "paused"
+STATE_GAME_OVER = "gameover"
+STATE_HELP = "help"
+STATE_STATS = "stats"
+
 # =============================================================================
 #  LOGO (ASCII-style rendered in the menu)
 # =============================================================================
@@ -142,6 +155,13 @@ _bg_sky = Entity(
 )
 
 log("SYSTEM", "Ursina engine initialized", {"platform": sys.platform})
+
+# -- Controller setup (optional, game works without one) --
+gamepad = GameController()
+if gamepad.connected:
+    log("SYSTEM", "Controller detected", {"name": gamepad.joystick.get_name()})
+else:
+    log("SYSTEM", "No controller detected — keyboard mode")
 
 # =============================================================================
 #  LOADING SCREEN   (shown while preloading assets)
@@ -406,7 +426,7 @@ power = INITIAL_POWER
 _displayed_power = INITIAL_POWER  # for smooth bar animation
 
 game_running = True
-game_state = "loading"  # loading | start | playing | gameover | help | stats
+game_state = STATE_LOADING
 
 shooting_mode = False
 shooting_timer = 0
@@ -417,6 +437,12 @@ menu_panel = None
 help_panel = None
 game_over_panel = None
 stats_panel = None
+pause_panel = None
+
+# -- Menu navigation state (for controller support) --
+_menu_buttons = []
+_menu_selected = 0
+_menu_back_fn = None
 
 # =============================================================================
 #  UI ELEMENTS  (HUD shown during gameplay)
@@ -501,6 +527,93 @@ def show_hud():
 
 hide_hud()
 
+
+# =============================================================================
+#  MENU NAVIGATION  (controller stick + button support for menus)
+# =============================================================================
+
+
+def _clear_menu_navigation():
+    """Reset menu button tracking."""
+    global _menu_buttons, _menu_selected, _menu_back_fn
+    # Restore original colours before clearing
+    for btn in _menu_buttons:
+        if hasattr(btn, "_base_color"):
+            try:
+                btn.color = btn._base_color
+            except Exception:
+                pass
+    _menu_buttons = []
+    _menu_selected = 0
+    _menu_back_fn = None
+
+
+def _register_menu_buttons(buttons, back_fn=None):
+    """Register a list of Button entities for controller navigation."""
+    global _menu_buttons, _menu_selected, _menu_back_fn
+    _clear_menu_navigation()
+    _menu_buttons = list(buttons)
+    _menu_selected = 0
+    _menu_back_fn = back_fn
+    _highlight_selected()
+
+
+def _highlight_selected():
+    """Visually indicate which menu button is currently selected."""
+    for i, btn in enumerate(_menu_buttons):
+        if not hasattr(btn, "_base_color"):
+            btn._base_color = btn.color
+        try:
+            if i == _menu_selected:
+                btn.color = btn.highlight_color
+            else:
+                btn.color = btn._base_color
+        except Exception:
+            pass
+
+
+def _navigate_menu(direction):
+    """Move menu selection.  direction: -1 (up) or +1 (down)."""
+    global _menu_selected
+    if not _menu_buttons:
+        return
+    _menu_selected = (_menu_selected + direction) % len(_menu_buttons)
+    _highlight_selected()
+
+
+def _confirm_menu():
+    """Activate the currently highlighted menu button."""
+    if _menu_buttons and 0 <= _menu_selected < len(_menu_buttons):
+        btn = _menu_buttons[_menu_selected]
+        if btn.on_click:
+            btn.on_click()
+
+
+def _back_menu():
+    """Trigger the back/cancel action for the current menu."""
+    if _menu_back_fn:
+        _menu_back_fn()
+
+
+def _handle_controller_menu_nav():
+    """Process controller input while a menu is active."""
+    if not gamepad.connected:
+        return
+    # In help screen, use stick for scrolling instead of menu navigation
+    if game_state == STATE_HELP and _help_content is not None:
+        _, stick_y = gamepad.get_stick()
+        if abs(stick_y) > 0.3:
+            _scroll_help(-stick_y * HELP_SCROLL_STICK_SPEED * time.dt)
+    else:
+        nav = gamepad.get_menu_nav(time.dt)
+        if nav != 0:
+            _navigate_menu(nav)
+    if gamepad.is_button_just_pressed(BUTTON_CONFIRM):
+        _confirm_menu()
+    if gamepad.is_button_just_pressed(BUTTON_BACK):
+        _back_menu()
+
+
 # =============================================================================
 #  STYLED BUTTON HELPER
 # =============================================================================
@@ -548,11 +661,14 @@ def make_button(
 
 def clear_all_ui():
     """Destroy all menu/overlay panels."""
-    global menu_panel, help_panel, game_over_panel, stats_panel
-    for panel in (menu_panel, help_panel, game_over_panel, stats_panel):
+    global menu_panel, help_panel, game_over_panel, stats_panel, pause_panel
+    global _help_content
+    for panel in (menu_panel, help_panel, game_over_panel, stats_panel, pause_panel):
         if panel:
             destroy(panel)
-    menu_panel = help_panel = game_over_panel = stats_panel = None
+    menu_panel = help_panel = game_over_panel = stats_panel = pause_panel = None
+    _help_content = None
+    _clear_menu_navigation()
     log("UI", "Cleared all UI panels")
 
 
@@ -564,7 +680,7 @@ def show_start_menu():
     clear_all_ui()
     hide_hud()
     player.visible = False
-    game_state = "start"
+    game_state = STATE_MAIN_MENU
     log("MENU", "Showing start menu")
 
     menu_panel = Entity(
@@ -610,23 +726,25 @@ def show_start_menu():
         y=0.04,
     )
 
-    make_button(menu_panel, "START GAME", y=-0.02, on_click=start_game)
-    make_button(
+    _btns = []
+    _btns.append(make_button(menu_panel, "START GAME", y=-0.02, on_click=start_game))
+    _btns.append(make_button(
         menu_panel,
         "STATS",
         y=-0.07,
         on_click=show_stats_menu,
         btn_color=COLOR_PURPLE,
         hover_color=COLOR_PURPLE_HOVER,
-    )
-    make_button(
+    ))
+    _btns.append(make_button(
         menu_panel,
         "HELP & CONTROLS",
         y=-0.12,
         on_click=show_help,
         btn_color=COLOR_ORANGE,
         hover_color=COLOR_ORANGE_HOVER,
-    )
+    ))
+    _register_menu_buttons(_btns)
 
     # Footer
     Entity(
@@ -657,11 +775,24 @@ def show_start_menu():
 # -------- HELP SCREEN --------
 
 
-def show_help():
-    global help_panel, game_state
+# -- Scrollable help screen state --
+_help_content = None       # Entity holding all scrollable content
+_help_scroll_y = 0.0       # Current scroll offset
+HELP_SCROLL_SPEED = 0.05   # Scroll increment per mouse wheel tick
+HELP_SCROLL_STICK_SPEED = 0.35  # Scroll speed for controller stick (units/sec)
+HELP_SCROLL_MIN = 0.0      # Top (no scroll up past start)
+HELP_SCROLL_MAX = 0.65     # Maximum scroll down distance
+
+
+def show_help(back_fn=None):
+    """Show help/controls screen.  *back_fn* overrides the back button target."""
+    global help_panel, game_state, _help_content, _help_scroll_y
     clear_all_ui()
-    game_state = "help"
+    game_state = STATE_HELP
     log("MENU", "Showing help screen")
+    if back_fn is None:
+        back_fn = back_to_menu
+    _help_scroll_y = 0.0
 
     # Solid opaque full-screen background
     help_panel = Entity(
@@ -672,150 +803,115 @@ def show_help():
         z=5,
     )
 
-    # Accent line at top
-    Entity(
-        parent=help_panel,
-        model="quad",
-        color=color.yellow,
-        scale=(0.50, 0.002),
-        y=0.36,
-        z=-0.1,
-    )
+    # --- Fixed header (stays on screen) ---
+    Text(parent=help_panel, text="CONTROLS & HELP", y=0.44, scale=0.9,
+         origin=(0, 0), color=color.yellow, z=-0.5)
+    Entity(parent=help_panel, model="quad", color=color.yellow,
+           scale=(0.50, 0.002), y=0.415, z=-0.1)
 
-    # Title
-    Text(
-        parent=help_panel,
-        text="CONTROLS & HELP",
-        y=0.33,
-        scale=0.9,
-        origin=(0, 0),
-        color=color.yellow,
-        z=-0.5,
-    )
-    Text(
-        parent=help_panel,
-        text="Survive as long as you can!",
-        y=0.29,
-        scale=0.5,
-        origin=(0, 0),
-        color=COLOR_TEXT_DIM,
-        z=-0.5,
-    )
+    # Scroll hint
+    Text(parent=help_panel, text="Scroll: Mouse wheel / Controller stick",
+         y=0.395, scale=0.35, origin=(0, 0), color=COLOR_TEXT_DIM, z=-0.5)
 
-    Entity(
-        parent=help_panel,
-        model="quad",
-        color=Color(1, 1, 1, 0.15),
-        scale=(0.35, 0.001),
-        y=0.26,
-        z=-0.1,
-    )
+    # --- Scrollable content container ---
+    _help_content = Entity(parent=help_panel, z=-0.2)
 
-    # Movement
-    Text(
-        parent=help_panel,
-        text="MOVEMENT",
-        y=0.23,
-        scale=0.65,
-        origin=(0, 0),
-        color=COLOR_ACCENT,
-        z=-0.5,
-    )
-    Text(
-        parent=help_panel,
-        text="W / S  :  Up / Down",
-        y=0.195,
-        scale=0.5,
-        origin=(0, 0),
-        color=COLOR_TEXT,
-        z=-0.5,
-    )
-    Text(
-        parent=help_panel,
-        text="A / D  :  Left / Right",
-        y=0.17,
-        scale=0.5,
-        origin=(0, 0),
-        color=COLOR_TEXT,
-        z=-0.5,
-    )
+    # -- Build content starting just above screen center --
+    cy = 0.05   # cursor y position inside _help_content
 
-    Entity(
-        parent=help_panel,
-        model="quad",
-        color=Color(1, 1, 1, 0.15),
-        scale=(0.35, 0.001),
-        y=0.145,
-        z=-0.1,
-    )
+    Text(parent=_help_content, text="Survive as long as you can!", y=cy,
+         scale=0.5, origin=(0, 0), color=COLOR_TEXT_DIM, z=-0.5)
+    cy -= 0.035
 
-    # Orb types
-    Text(
-        parent=help_panel,
-        text="ORB TYPES",
-        y=0.12,
-        scale=0.65,
-        origin=(0, 0),
-        color=COLOR_ORANGE,
-        z=-0.5,
-    )
-    orb_info = [
-        ("Green   - Power    : Restores energy", color.lime, 0.09),
-        ("Orange  - Drain    : Removes energy", Color(1.0, 100 / 255, 0, 1.0), 0.065),
-        (
-            "Purple  - Speed Up : Faster for 3s",
-            Color(180 / 255, 100 / 255, 1.0, 1.0),
-            0.04,
-        ),
-        ("Blue    - Slow     : Slower for 3s", color.azure, 0.015),
-        ("Red     - Shooter  : Shoot for 10s", color.red, -0.01),
+    Entity(parent=_help_content, model="quad", color=Color(1, 1, 1, 0.15),
+           scale=(0.35, 0.001), y=cy, z=-0.1)
+    cy -= 0.03
+
+    # ── Keyboard Controls ──
+    Text(parent=_help_content, text="KEYBOARD CONTROLS", y=cy, scale=0.6,
+         origin=(0, 0), color=COLOR_ACCENT, z=-0.5)
+    cy -= 0.03
+    kb_lines = [
+        "W / S       :  Up / Down",
+        "A / D       :  Left / Right",
+        "Space       :  Shoot (when active)",
+        "ESC         :  Pause Menu",
     ]
-    for txt, clr, ypos in orb_info:
-        Text(
-            parent=help_panel,
-            text=txt,
-            y=ypos,
-            scale=0.45,
-            origin=(0, 0),
-            color=clr,
-            z=-0.5,
-        )
+    for line in kb_lines:
+        Text(parent=_help_content, text=line, y=cy, scale=0.45,
+             origin=(0, 0), color=COLOR_TEXT, z=-0.5)
+        cy -= 0.025
 
-    Entity(
-        parent=help_panel,
-        model="quad",
-        color=Color(1, 1, 1, 0.15),
-        scale=(0.35, 0.001),
-        y=-0.035,
-        z=-0.1,
-    )
+    cy -= 0.01
+    Entity(parent=_help_content, model="quad", color=Color(1, 1, 1, 0.15),
+           scale=(0.35, 0.001), y=cy, z=-0.1)
+    cy -= 0.03
 
-    # Gameplay
-    Text(
-        parent=help_panel,
-        text="GAMEPLAY",
-        y=-0.06,
-        scale=0.65,
-        origin=(0, 0),
-        color=color.lime,
-        z=-0.5,
-    )
-    Text(
-        parent=help_panel,
-        text="- Avoid meteorites\n- Collect orbs to stay alive\n- Keep power bar up\n- Space to shoot (red orb)",
-        y=-0.10,
-        scale=0.45,
-        origin=(0, 0),
-        color=COLOR_TEXT,
-        z=-0.5,
-    )
+    # ── Controller Controls (auto-generated from mapping) ──
+    Text(parent=_help_content, text="CONTROLLER CONTROLS", y=cy, scale=0.6,
+         origin=(0, 0), color=Color(0.2, 0.8, 1.0, 1.0), z=-0.5)
+    cy -= 0.03
+    ctrl_mappings = get_controller_mappings()
+    for btn_label, action in ctrl_mappings:
+        Text(parent=_help_content,
+             text=f"{btn_label:<12s}:  {action}",
+             y=cy, scale=0.45,
+             origin=(0, 0), color=COLOR_TEXT, z=-0.5)
+        cy -= 0.025
 
-    make_button(
-        help_panel,
-        "BACK TO MENU",
-        y=-0.20,
-        on_click=back_to_menu,
+    cy -= 0.01
+    Entity(parent=_help_content, model="quad", color=Color(1, 1, 1, 0.15),
+           scale=(0.35, 0.001), y=cy, z=-0.1)
+    cy -= 0.03
+
+    # ── Orb Types ──
+    Text(parent=_help_content, text="ORB TYPES", y=cy, scale=0.6,
+         origin=(0, 0), color=COLOR_ORANGE, z=-0.5)
+    cy -= 0.03
+    orb_info = [
+        ("Green   - Power    : Restores energy", color.lime),
+        ("Orange  - Drain    : Removes energy", Color(1.0, 100 / 255, 0, 1.0)),
+        ("Purple  - Speed Up : Faster for 3s", Color(180 / 255, 100 / 255, 1.0, 1.0)),
+        ("Blue    - Slow     : Slower for 3s", color.azure),
+        ("Red     - Shooter  : Shoot for 10s", color.red),
+    ]
+    for txt, clr in orb_info:
+        Text(parent=_help_content, text=txt, y=cy, scale=0.42,
+             origin=(0, 0), color=clr, z=-0.5)
+        cy -= 0.025
+
+    cy -= 0.01
+    Entity(parent=_help_content, model="quad", color=Color(1, 1, 1, 0.15),
+           scale=(0.35, 0.001), y=cy, z=-0.1)
+    cy -= 0.03
+
+    # ── Gameplay Tips ──
+    Text(parent=_help_content, text="GAMEPLAY", y=cy, scale=0.6,
+         origin=(0, 0), color=color.lime, z=-0.5)
+    cy -= 0.03
+    Text(parent=_help_content,
+         text="- Avoid meteorites\n- Collect orbs to stay alive\n- Keep power bar up\n- Space / RB to shoot (red orb)",
+         y=cy, scale=0.42, origin=(0, 0), color=COLOR_TEXT, z=-0.5)
+
+    # --- Fixed footer with BACK button ---
+    # Dark gradient strip at bottom so button is always readable
+    Entity(parent=help_panel, model="quad",
+           color=Color(12 / 255, 12 / 255, 28 / 255, 1.0),
+           scale=(2, 0.12), y=-0.44, z=-0.3)
+    _btns = []
+    _btns.append(make_button(help_panel, "BACK", y=-0.44, on_click=back_fn))
+    _register_menu_buttons(_btns, back_fn=back_fn)
+
+
+def _scroll_help(amount):
+    """Scroll the help content by *amount* (positive = scroll down to see more)."""
+    global _help_scroll_y
+    if _help_content is None:
+        return
+    _help_scroll_y = clamp(
+        _help_scroll_y + amount, HELP_SCROLL_MIN, HELP_SCROLL_MAX
     )
+    _help_content.y = _help_scroll_y
 
 
 # -------- STATS SCREEN --------
@@ -824,7 +920,7 @@ def show_help():
 def show_stats_menu():
     global stats_panel, game_state
     clear_all_ui()
-    game_state = "stats"
+    game_state = STATE_STATS
     log("MENU", "Showing stats screen")
 
     stats = load_stats()
@@ -940,12 +1036,14 @@ def show_stats_menu():
             z=-0.5,
         )
 
-    make_button(
+    _btns = []
+    _btns.append(make_button(
         stats_panel,
         "BACK TO MENU",
         y=-0.20,
         on_click=back_to_menu,
-    )
+    ))
+    _register_menu_buttons(_btns, back_fn=back_to_menu)
 
 
 # -------- GAME OVER SCREEN --------
@@ -954,7 +1052,7 @@ def show_stats_menu():
 def show_game_over():
     global game_over_panel, game_state
     clear_all_ui()
-    game_state = "gameover"
+    game_state = STATE_GAME_OVER
     log(
         "MENU",
         "Showing game over screen",
@@ -1066,28 +1164,127 @@ def show_game_over():
     )
 
     btn_y = sep_y - 0.035
-    make_button(
+    _btns = []
+    _btns.append(make_button(
         game_over_panel,
         "PLAY AGAIN",
         y=btn_y,
         on_click=start_game,
-    )
-    make_button(
+    ))
+    _btns.append(make_button(
         game_over_panel,
         "VIEW STATS",
         y=btn_y - 0.045,
         on_click=show_stats_menu,
         btn_color=COLOR_PURPLE,
         hover_color=COLOR_PURPLE_HOVER,
-    )
-    make_button(
+    ))
+    _btns.append(make_button(
         game_over_panel,
         "MAIN MENU",
         y=btn_y - 0.09,
         on_click=back_to_menu,
         btn_color=COLOR_ORANGE,
         hover_color=COLOR_ORANGE_HOVER,
+    ))
+    _register_menu_buttons(_btns)
+
+
+# -------- PAUSE MENU --------
+
+
+def toggle_pause():
+    """Toggle between PLAYING and PAUSED states."""
+    global game_state
+    if game_state == STATE_PLAYING:
+        game_state = STATE_PAUSED
+        show_pause_menu()
+        log("GAME", "Game paused")
+    elif game_state == STATE_PAUSED:
+        game_state = STATE_PLAYING
+        hide_pause_menu()
+        show_hud()
+        log("GAME", "Game resumed")
+
+
+def show_pause_menu():
+    """Display the pause overlay with menu buttons."""
+    global pause_panel
+    hide_pause_menu()
+    hide_hud()
+    _clear_menu_navigation()
+
+    # Semi-transparent overlay so the game world is still visible behind
+    pause_panel = Entity(
+        parent=camera.ui, model="quad",
+        color=Color(0, 0, 0, 0.75), scale=(2, 2), z=5,
     )
+
+    Text(parent=pause_panel, text="PAUSED", y=0.15, scale=1.8,
+         origin=(0, 0), color=COLOR_ACCENT, z=-0.5)
+
+    Entity(parent=pause_panel, model="quad",
+           color=Color(1, 1, 1, 0.15), scale=(0.3, 0.001), y=0.09, z=-0.1)
+
+    _btns = []
+    _btns.append(make_button(
+        pause_panel, "RESUME GAME", y=0.04, on_click=_resume_from_pause,
+    ))
+    _btns.append(make_button(
+        pause_panel, "HELP & CONTROLS", y=-0.01,
+        on_click=_pause_show_help,
+        btn_color=COLOR_ORANGE, hover_color=COLOR_ORANGE_HOVER,
+    ))
+    _btns.append(make_button(
+        pause_panel, "RETURN TO MAIN MENU", y=-0.06,
+        on_click=_pause_return_to_menu,
+        btn_color=COLOR_PURPLE, hover_color=COLOR_PURPLE_HOVER,
+    ))
+    _btns.append(make_button(
+        pause_panel, "QUIT GAME", y=-0.11,
+        on_click=application.quit,
+        btn_color=color.red, hover_color=Color(1, 0.3, 0.3, 1),
+    ))
+    _register_menu_buttons(_btns, back_fn=_resume_from_pause)
+
+
+def hide_pause_menu():
+    """Remove the pause menu overlay."""
+    global pause_panel
+    if pause_panel:
+        destroy(pause_panel)
+        pause_panel = None
+
+
+def _resume_from_pause():
+    """Resume gameplay from the pause menu."""
+    toggle_pause()
+
+
+def _pause_return_to_menu():
+    """Return to main menu from pause — resets game state properly."""
+    global game_state
+    hide_pause_menu()
+    hide_hud()
+    player.visible = False
+    _cleanup_game_entities()
+    game_state = STATE_MAIN_MENU
+    show_start_menu()
+    log("MENU", "Returned to main menu from pause")
+
+
+def _pause_show_help():
+    """Open help screen from the pause menu, with back → pause."""
+    hide_pause_menu()
+    show_help(back_fn=_back_to_pause)
+
+
+def _back_to_pause():
+    """Return from help screen to the pause overlay."""
+    global game_state
+    clear_all_ui()
+    game_state = STATE_PAUSED
+    show_pause_menu()
 
 
 # -------- NAVIGATION --------
@@ -1104,7 +1301,7 @@ def start_game():
     restart_game()
     player.visible = True
     show_hud()
-    game_state = "playing"
+    game_state = STATE_PLAYING
     log("GAME", "Game started")
 
 
@@ -1183,6 +1380,7 @@ def shatter_meteorite(meteorite):
             destroy(meteorite)
         except Exception:
             pass
+    gamepad.rumble_meteor_destroy()  # Haptic feedback: light vibration
     log("GAME", "Meteorite shattered")
 
 
@@ -1193,18 +1391,38 @@ def shatter_meteorite(meteorite):
 
 def input(key):
     global game_running, game_state, shooting_mode, projectiles
-    if game_state == "gameover" and key == "r":
+    # -- Escape key: pause toggle or back navigation --
+    if key == "escape":
+        if game_state == STATE_PLAYING:
+            toggle_pause()
+            return
+        elif game_state == STATE_PAUSED:
+            toggle_pause()
+            return
+        elif game_state in (STATE_HELP, STATE_STATS):
+            log("INPUT", "Escape key pressed, returning")
+            if _menu_back_fn:
+                _menu_back_fn()
+            else:
+                back_to_menu()
+            return
+
+    if game_state == STATE_GAME_OVER and key == "r":
         log("INPUT", "Restart key pressed")
         start_game()
-    if game_state == "start" and key == "enter":
+    if game_state == STATE_MAIN_MENU and key == "enter":
         log("INPUT", "Enter key pressed on start menu")
         start_game()
-    if game_state in ("help", "stats") and key == "escape":
-        log("INPUT", "Escape key pressed, returning to menu")
-        back_to_menu()
-    if game_state == "playing" and shooting_mode and key == "space":
+    if game_state == STATE_PLAYING and shooting_mode and key == "space":
         proj = Projectile()
         projectiles.append(proj)
+
+    # -- Mouse scroll wheel for help screen --
+    if game_state == STATE_HELP:
+        if key == "scroll up":
+            _scroll_help(-HELP_SCROLL_SPEED)
+        elif key == "scroll down":
+            _scroll_help(HELP_SCROLL_SPEED)
 
 
 # =============================================================================
@@ -1268,13 +1486,30 @@ def update():
     global orbs_collected, power, spawn_interval, game_state, _displayed_power
     global shooting_mode, shooting_timer, projectiles
 
-    # Animate loading spinner while in loading state
-    if game_state == "loading":
+    # -- Always poll controller --
+    gamepad.poll(time.dt)
+
+    # -- Loading screen animation --
+    if game_state == STATE_LOADING:
         _update_spinner()
+        gamepad.update_button_states()
         return
 
-    if game_state != "playing":
+    # -- Controller menu navigation for non-playing states --
+    if game_state not in (STATE_PLAYING,):
+        _handle_controller_menu_nav()
+        gamepad.update_button_states()
         return
+
+    # -- Controller: check pause/shoot buttons during gameplay --
+    if gamepad.connected:
+        if gamepad.is_button_just_pressed(BUTTON_PAUSE):
+            toggle_pause()
+            gamepad.update_button_states()
+            return
+        if shooting_mode and gamepad.is_button_just_pressed(BUTTON_SHOOT):
+            proj = Projectile()
+            projectiles.append(proj)
 
     # -- Difficulty scaling --
     player.forward_speed = min(
@@ -1284,13 +1519,14 @@ def update():
         BASE_SPAWN_INTERVAL - player.z * SPAWN_RATE_INCREASE, MIN_SPAWN_INTERVAL
     )
 
-    # -- Player movement with inertia --
+    # -- Player movement: combine keyboard + controller analog stick --
+    stick_x, stick_y = gamepad.get_stick() if gamepad.connected else (0.0, 0.0)
     input_dir = Vec3(
-        held_keys["d"] - held_keys["a"],
-        held_keys["w"] - held_keys["s"],
+        (held_keys["d"] - held_keys["a"]) + stick_x,
+        (held_keys["w"] - held_keys["s"]) + stick_y,
         0,
     )
-    if input_dir.length() > 0:
+    if input_dir.length() > 1:
         input_dir = input_dir.normalized()
 
     player.velocity = lerp(
@@ -1341,6 +1577,7 @@ def update():
         player.visible = False
         hide_hud()
         _cleanup_game_entities()
+        gamepad.rumble_player_death()  # Haptic feedback: strong vibration
         show_game_over()
         return
 
@@ -1376,6 +1613,7 @@ def update():
             player.visible = False
             hide_hud()
             _cleanup_game_entities()
+            gamepad.rumble_player_death()  # Haptic feedback: strong vibration
             show_game_over()
             hit = True
     for obs in obstacles_to_remove:
@@ -1475,6 +1713,9 @@ def update():
     else:
         shooting_indicator.text = ""
 
+    # -- Snapshot controller button states for edge detection next frame --
+    gamepad.update_button_states()
+
 
 # =============================================================================
 #  LAUNCH  -  Show loading screen, preload assets, then transition to menu
@@ -1485,7 +1726,7 @@ def _finish_loading():
     """Called after assets are preloaded. Transition to start menu."""
     global game_state
     _hide_loading()
-    game_state = "start"
+    game_state = STATE_MAIN_MENU
     show_start_menu()
     log("SYSTEM", "Application ready - showing start menu")
 
@@ -1497,7 +1738,7 @@ def _run_preload():
 
 
 # Schedule preload to run after the first frame so loading screen renders first
-game_state = "loading"
+game_state = STATE_LOADING
 invoke(_run_preload, delay=0.3)
 
 app.run()
