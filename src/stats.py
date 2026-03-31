@@ -8,7 +8,9 @@ import json
 import os
 from datetime import datetime
 
-DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
+DATA_DIR = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data"
+)
 STATS_FILE = os.path.join(DATA_DIR, "game_stats.json")
 
 # Ensure data directory exists

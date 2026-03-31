@@ -33,6 +33,7 @@ from src.logger import log
 #  PLAYER
 # ─────────────────────────────────────────────────────────────────────────────
 
+
 class Player(Entity):
     """The player's spaceship."""
 
@@ -56,6 +57,7 @@ class Player(Entity):
 # ─────────────────────────────────────────────────────────────────────────────
 #  OBSTACLE
 # ─────────────────────────────────────────────────────────────────────────────
+
 
 class Obstacle(Entity):
     """A meteorite obstacle that the player must avoid."""
@@ -143,6 +145,7 @@ class EnergyOrb(Entity):
 #  PROJECTILE
 # ─────────────────────────────────────────────────────────────────────────────
 
+
 class Projectile(Entity):
     """A shot fired by the player during shooter mode."""
 
@@ -190,6 +193,7 @@ class Projectile(Entity):
 # ─────────────────────────────────────────────────────────────────────────────
 #  COLLISION HELPERS
 # ─────────────────────────────────────────────────────────────────────────────
+
 
 def check_collision(player: Entity, obstacle: Obstacle) -> bool:
     """Player–obstacle collision check (safe against destroyed entities)."""

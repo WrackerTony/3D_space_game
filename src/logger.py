@@ -9,7 +9,9 @@ import os
 import time
 from datetime import datetime
 
-LOG_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "logs")
+LOG_DIR = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "logs"
+)
 LOG_FILE = os.path.join(LOG_DIR, "game_log.jsonl")
 
 _start_time = time.time()
