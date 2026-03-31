@@ -1,5 +1,5 @@
 """
-3D Space Runner - Main Game File
+ORBIT RUSH - Main Game File
 A 3D space survival game built with Ursina Engine.
 Cross-platform compatible (Linux, Windows, macOS).
 """
@@ -26,7 +26,7 @@ from space_background import SpaceBackground
 # =============================================================================
 
 # --- Window ---
-WINDOW_TITLE = "3D Space Runner"
+WINDOW_TITLE = "ORBIT RUSH"
 WINDOW_BORDERLESS = False
 WINDOW_FULLSCREEN = False
 SHOW_FPS = True
@@ -171,7 +171,7 @@ loading_panel = Entity(
 
 loading_title = Text(
     parent=loading_panel,
-    text="3D SPACE RUNNER",
+    text="ORBIT RUSH",
     y=0.15,
     scale=3.0,
     origin=(0, 0),
@@ -685,34 +685,16 @@ def show_start_menu():
         parent=camera.ui, model="quad", color=COLOR_BG_DARK, scale=(2, 2), z=5
     )
 
-    # Logo (compact)
-    Text(
+    # Logo image
+    Entity(
         parent=menu_panel,
-        text=LOGO_TEXT,
-        y=0.35,
-        scale=0.5,
-        origin=(0, 0),
-        color=COLOR_ACCENT,
-    )
-
-    # Title line below logo
-    Text(
-        parent=menu_panel,
-        text="3D  SPACE  RUNNER",
-        y=0.14,
-        scale=2.0,
-        origin=(0, 0),
-        color=COLOR_TEXT,
-    )
-
-    # Subtitle
-    Text(
-        parent=menu_panel,
-        text="Dodge meteorites. Collect orbs. Survive.",
-        y=0.08,
-        scale=0.9,
-        origin=(0, 0),
-        color=COLOR_TEXT_DIM,
+        model="quad",
+        texture="title.png",
+        scale=(0.4, 0.30),
+        y=0.16,
+        z=-1,
+        unlit=True,
+        color=color.white,
     )
 
     # Separator line
@@ -721,7 +703,7 @@ def show_start_menu():
         model="quad",
         color=Color(1, 1, 1, 0.1),
         scale=(0.4, 0.001),
-        y=0.04,
+        y=0.12,
     )
 
     _btns = []
