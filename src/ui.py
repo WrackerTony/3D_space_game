@@ -15,6 +15,7 @@ from ursina import (
     clamp,
     application,
 )
+from random import uniform, random as _rnd
 
 from src.config import (
     COLOR_BG_DARK,
@@ -334,13 +335,17 @@ class MenuManager:
         self.hide_hud()
         log("MENU", "Showing start menu")
 
+        # Pure black background to match the title image
         self.menu_panel = Entity(
             parent=camera.ui,
             model="quad",
-            color=COLOR_BG_DARK,
+            color=color.black,
             scale=(2, 2),
             z=5,
         )
+
+        # Decorative stars scattered on the sides
+        self._spawn_menu_stars()
 
         # Logo
         Entity(
@@ -348,7 +353,7 @@ class MenuManager:
             model="quad",
             texture=TITLE_TEXTURE,
             scale=(0.4, 0.30),
-            y=0.16,
+            y=0.15,
             z=-1,
             unlit=True,
             color=color.white,
@@ -358,7 +363,7 @@ class MenuManager:
             model="quad",
             color=Color(1, 1, 1, 0.1),
             scale=(0.4, 0.001),
-            y=0.12,
+            y=0.08,
         )
 
         btns = []
@@ -411,6 +416,57 @@ class MenuManager:
             origin=(0, 0),
             color=Color(100 / 255, 100 / 255, 120 / 255, 1.0),
         )
+
+    # ── Menu Stars ────────────────────────────────────────────────────────
+
+    def _spawn_menu_stars(self):
+        """Add small decorative star dots to the left and right sides of the menu."""
+        # Star colours: mostly white/blue to complement the blue title text
+        _star_colors = [
+            Color(1.0, 1.0, 1.0, 1.0),  # white
+            Color(0.85, 0.90, 1.0, 1.0),  # cool white
+            Color(0.5, 0.7, 1.0, 1.0),  # soft blue
+            Color(0.3, 0.55, 1.0, 1.0),  # vivid blue
+            Color(0.25, 0.80, 1.0, 1.0),  # cyan
+        ]
+        for _ in range(60):
+            # Place stars on the LEFT and RIGHT margins (avoid center where logo/buttons sit)
+            side = 1 if _rnd() > 0.5 else -1
+            sx = side * uniform(0.22, 0.48)  # x: outside the center content area
+            sy = uniform(-0.46, 0.46)  # y: full vertical range
+            size = uniform(0.002, 0.006)
+            brightness = uniform(0.3, 1.0)
+            sc = _star_colors[int(_rnd() * len(_star_colors)) % len(_star_colors)]
+            Entity(
+                parent=self.menu_panel,
+                model="quad",
+                color=Color(
+                    sc.r * brightness, sc.g * brightness, sc.b * brightness, brightness
+                ),
+                scale=(size, size),
+                position=(sx, sy),
+                z=-0.05,
+            )
+        # A few slightly larger "glow" stars for depth
+        for _ in range(8):
+            side = 1 if _rnd() > 0.5 else -1
+            sx = side * uniform(0.25, 0.45)
+            sy = uniform(-0.40, 0.40)
+            size = uniform(0.008, 0.015)
+            brightness = uniform(0.15, 0.35)
+            Entity(
+                parent=self.menu_panel,
+                model="quad",
+                color=Color(
+                    0.4 * brightness,
+                    0.6 * brightness,
+                    1.0 * brightness,
+                    brightness * 0.6,
+                ),
+                scale=(size, size),
+                position=(sx, sy),
+                z=-0.04,
+            )
 
     # ── Help Screen ──────────────────────────────────────────────────────
 

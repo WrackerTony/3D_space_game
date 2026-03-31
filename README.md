@@ -1,6 +1,6 @@
 <div align="center">
 
-![Typing SVG](https://readme-typing-svg.demolab.com?font=Orbitron&weight=700&size=42&letterSpacing=6px&pause=2000&color=1E90FF&center=true&vCenter=true&width=700&height=90&lines=3D+SPACE+RUNNER)
+![Typing SVG](https://readme-typing-svg.demolab.com?font=Orbitron&weight=700&size=42&letterSpacing=6px&pause=2000&color=1E90FF&center=true&vCenter=true&width=700&height=90&lines=ORBIT+RUSH)
 
 <br/>
 
@@ -18,11 +18,11 @@
 
 ---
 
-## 🎬 Trailer
+## 🎬 Game Preview
 
 <div align="center">
 
-![Game Trailer](intro_preview.gif)
+![Game Preview](media/preview.gif)
 
 </div>
 
@@ -30,15 +30,24 @@
 
 ## 🌌 About the Game
 
-**3D Space Runner** is a high-speed 3D arcade survival game built entirely in **Python** using the [**Ursina Engine**](https://www.ursinaengine.org/). You pilot a custom spaceship hurtling through an endless asteroid field. The longer you survive, the faster it gets — and the harder it becomes.
+**ORBIT RUSH** is a high-speed 3D arcade survival game built entirely in **Python** using the [**Ursina Engine**](https://www.ursinaengine.org/). You pilot a custom spaceship hurtling through an endless asteroid field. The longer you survive, the faster it gets — and the harder it becomes.
 
-The game features a full **loading screen**, **main menu**, **in-game HUD**, **stats tracking**, **help screen**, and a **game-over screen** with your final score.
+The game features a full **loading screen**, **main menu**, **in-game HUD**, **stats tracking**, **help screen**, **pause menu**, and a **game-over screen** with your final score.
+
+### ✨ Features
+
+- 🎮 **Full controller / gamepad support** — analog stick movement, button navigation, and haptic feedback (vibration)
+- 🌌 **Dynamic 3D space background** — multi-layered parallax star field with nebula effects
+- 🔫 **Shooting mode** — destroy meteorites with projectiles when you grab a red orb
+- ⏸️ **Pause menu** — pause mid-game with access to help & controls
+- 📊 **Persistent stats** — your best scores are tracked across sessions
+- 🖥️ **Cross-platform** — runs on Linux, Windows, and macOS
 
 ---
 
 ## 🎮 How to Play
 
-### 🕹️ Controls
+### 🕹️ Keyboard Controls
 
 | Key       | Action                                         |
 | --------- | ---------------------------------------------- |
@@ -47,13 +56,23 @@ The game features a full **loading screen**, **main menu**, **in-game HUD**, **s
 | `Space`   | **Fire** a projectile _(requires Shooter Orb)_ |
 | `Esc`     | Pause / Return to menu                         |
 
+### 🎮 Controller Controls
+
+| Input      | Action                     |
+| ---------- | -------------------------- |
+| Left Stick | Move ship (analog, smooth) |
+| RB (R1)    | Shoot                      |
+| B (B1)     | Pause Menu                 |
+| A          | Select / Confirm           |
+| B          | Back / Cancel              |
+
 <br/>
 
 ### 🛸 Objective
 
 You are flying forward automatically at ever-increasing speed. Your goal is to:
 
-- ✅ **Avoid meteorites** — a single collision depletes your power bar
+- ✅ **Avoid meteorites** — a single collision ends the run
 - ✅ **Collect energy orbs** — each type has a unique effect
 - ✅ **Keep your power bar full** — it drains passively every second
 - ✅ **Survive as long as possible** — your score is based on distance + orbs collected
@@ -90,20 +109,21 @@ The game gets harder the further you travel:
 
 The game automatically tracks your performance across sessions:
 
-- 📊 **`game_stats.json`** — stores your all-time best distance, orbs collected, and total runs
-- 📝 **`game_log.jsonl`** — a detailed event log for every game session (spawns, hits, orbs, etc.)
+- 📊 **`data/game_stats.json`** — stores your all-time best distance, orbs collected, and total runs
+- 📝 **`logs/game_log.jsonl`** — a detailed event log for every game session (spawns, hits, orbs, etc.)
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Component   | Technology                    |
-| ----------- | ----------------------------- |
-| Language    | **Python 3.x**                |
-| Game Engine | **Ursina Engine**             |
-| 3D Models   | Custom `.obj` / `.bam` assets |
-| Rendering   | **Panda3D** _(via Ursina)_    |
-| Platform    | Linux, Windows, macOS         |
+| Component   | Technology                 |
+| ----------- | -------------------------- |
+| Language    | **Python 3.x**             |
+| Game Engine | **Ursina Engine**          |
+| Controller  | **pygame** _(optional)_    |
+| 3D Models   | Custom `.obj` assets       |
+| Rendering   | **Panda3D** _(via Ursina)_ |
+| Platform    | Linux, Windows, macOS      |
 
 ---
 
@@ -129,29 +149,44 @@ python main.py
 
 ```
 3D_space_game/
-├── main.py                          # Main game file
-├── game_stats.py                    # Stats tracking logic
-├── game_logger.py                   # JSON event logger
+├── main.py                          # Game entry point
 ├── requirements.txt                 # Python dependencies
-├── intro.mkv                        # Original game trailer
-├── intro.mp4                        # Converted trailer (web-compatible)
-├── intro_preview.gif                # Animated preview for README
-├── Cool_Space_ship__*_texture.obj   # Player ship 3D model
-├── Cool_Space_ship__*_texture.png   # Player ship texture
-├── backround/
-│   └── space.png                    # Space background
-├── meteorit_style/
-│   ├── meteorit.obj                 # Meteorite 3D model
-│   └── meteorit.png                 # Meteorite texture
-└── models_compressed/
-    └── *.bam                        # Precompiled Panda3D models
+├── src/
+│   ├── config.py                    # All game constants & settings
+│   ├── controller.py                # Gamepad input & haptics
+│   ├── entities.py                  # Player, Obstacle, Orb, Projectile
+│   ├── logger.py                    # Structured JSONL logging
+│   ├── space_background.py          # Dynamic 3D star field
+│   ├── stats.py                     # Stats persistence
+│   └── ui.py                        # Menu screens, HUD, navigation
+├── assets/
+│   ├── models/player/               # Player ship (.obj, .png, .mtl)
+│   ├── models/meteorite/            # Meteorite (.obj, .png, .mtl)
+│   └── textures/                    # Title logo & UI textures
+├── media/                           # Screenshots & clips
+│   ├── clip.mkv                     # Full gameplay clip
+│   └── preview.gif                  # Animated preview for README
+├── logs/                            # Runtime logs (git-ignored)
+└── data/                            # Runtime stats (git-ignored)
 ```
+
+---
+
+## 🏅 Can You Beat My Record?
+
+<div align="center">
+
+My current best distance is **1 561** — good luck beating it! 🚀
+
+Let me know if you manage to top that score.
+
+</div>
 
 ---
 
 <div align="center">
 
-Made with ❤️ by **Wracker** &nbsp;|&nbsp; **3D Space Runner v2.0**
+Made with ❤️ by **Wracker** &nbsp;|&nbsp; **ORBIT RUSH v2.0**
 
 ![forthebadge](https://img.shields.io/badge/BUILT%20WITH-Python-blue?style=for-the-badge&logo=python)
 ![forthebadge](https://img.shields.io/badge/POWERED%20BY-Ursina%20Engine-purple?style=for-the-badge)
