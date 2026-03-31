@@ -1,12 +1,20 @@
-# Ignore game logs and stats
+# ── Runtime data (generated at runtime, not tracked in git) ──
+logs/
+!logs/.gitkeep
+data/
+!data/.gitkeep
 game_log.jsonl
 game_log*.jsonl
 game_stats.json
 game_stats*.json
 
-# Ignore Python cache
+# ── Python cache ──
 __pycache__/
 *.py[cod]
 *.pyc
 *.pyo
 *.pyd
+
+# ── Old / backup files ──
+main_backup.py
+main_old.py
